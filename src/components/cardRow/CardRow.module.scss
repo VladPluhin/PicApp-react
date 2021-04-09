@@ -1,0 +1,10 @@
+.cardRow {
+  display: flex;
+  flex-wrap: wrap;
+}
+.cardCol {
+  padding: 0 10px;
+  max-width: 23%;
+  width: 100%;
+  display: block;
+}
