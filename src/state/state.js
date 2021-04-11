@@ -1,4 +1,3 @@
-import React, {setState } from "react";
 import { createApi } from "unsplash-js";
 
 
@@ -41,10 +40,10 @@ export default class  State {
         console.log("something went wrong!");
       });
    }
-  
-   getPreferItem(linkImage) {
-    this._arrayPreferItem.push(linkImage)
-    console.log( this._arrayPreferItem)
-    return(this._arrayPreferItem.push)
-   }
+   GetUser(author ,url, creatDate) {
+    this.author = author;
+    this.url = url;
+    this.creatDate=creatDate 
+  }
+
 }

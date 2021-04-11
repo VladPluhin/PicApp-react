@@ -3,12 +3,10 @@ import PropTypes from 'prop-types';
 import './Like.scss';
 import State from "../../state/state";
 
-const Like = ({linkImage}) => {
-	
-	const state = new State;
+const Like = ({onHangleClick}) => {
 	return (
 		<button className="icon-heart btn-like" 
-		onClick={() => { state.getPreferItem(linkImage)}}>
+				onClick={ onHangleClick }>
 		</button>
 	)
 }
