@@ -39,11 +39,10 @@ export default class  State {
       .catch(() => {
         console.log("something went wrong!");
       });
-   }
-   GetUser(author ,url, creatDate) {
-    this.author = author;
-    this.url = url;
-    this.creatDate=creatDate 
-  }
+   };
 
+   GetPreferPhotos(author ,url) {
+      this.author = author;
+      this.url = url;
+    }
 }

@@ -13,12 +13,24 @@ const CardRow  = (props) => {
   const [count, PageRender] = useState(1);
   const [photosArr, setPreferPhotos] = useState([]);
  
-  const getLike =(items, arr) => {
-    arr.push(items);
-    console.log(arr)
+  const getLike =(author ,url,arr) => {
+    let selectPhoto = new GetUser(author, url);
+    const even=(elem) => elem.url == url;
+    
+    if(arr.some(even) !=true ){
+      arr.push(selectPhoto);
+    } else {
+      arr = arr.filter(elem =>  elem.url !== url)
+    }
+    
     return(arr)
   }
  
+  function GetUser(author ,url) {
+    this.author = author;
+    this.url = url;
+  }
+
   useEffect(() => {
     state.getApiReport(count, items, setPhotosResponse);
    }, [count]);
@@ -38,7 +50,7 @@ const CardRow  = (props) => {
           {data.response.results.map(photo => (
             <div key={photo.id} className = {classes.cardCol}>
               <Card photo={photo}
-                    getLike={ () => setPreferPhotos(getLike(photo.urls.regular, photosArr ))}
+                    getLike={ () => setPreferPhotos(getLike(photo.user.name, photo.urls.regular, photosArr ))}
                   />
             </div>
           ))}
