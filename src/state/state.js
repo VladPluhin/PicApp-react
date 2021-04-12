@@ -49,17 +49,10 @@ export default class  State {
     }
     
     getRenderCards(funct, seletcRow) {
-      switch (seletcRow){
-          case false:
-          seletcRow = true;
-          console.log(0)
-          return funct(seletcRow);
-          break;
-          case true:
-          seletcRow = false;
-          console.log(1)
-          return funct(seletcRow);
-          break;
-      }
+      if(!seletcRow) {
+        return  funct(true);
+      } else {
+      return  funct(false)
     }
+  }
 }

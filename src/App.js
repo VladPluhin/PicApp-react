@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Header from  './components/Header/Header';
 import State from  './state/state';
 import SectionMain from './components/sectionMain/SectionMain';
@@ -11,7 +11,7 @@ const App = () => {
 
   return(
         <Router>
-          <Header changeCardRows={ () =>state.getRenderCards(setNewPage, pageData)}/>
+          <Header changeCardRows={ () => state.getRenderCards(setNewPage, pageData)}/>
           <Switch>
               <Route path= "/"
                      exact

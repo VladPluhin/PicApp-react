@@ -2,10 +2,10 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import classes from './logo.module.scss';
 
-const  Logo= ()=> {
+const  Logo= (props)=> {
      return (
         <div className={classes.logo}>
-            <Link to='/'>PicApp</Link>
+            <Link  onClick={props.getrenderCards()}>PicApp</Link>
         </div>
      )
  }

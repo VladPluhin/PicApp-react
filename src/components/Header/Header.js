@@ -8,7 +8,7 @@ const Header = (props) => {
     return (
         <header className = {classes.header}>
             <div className={classes.container}>
-                <Logo/>
+                <Logo getrenderCards={()=> props.changeCardRows }/>
                 <Nav  getrenderCards={()=> props.changeCardRows }/>
             </div>
         </header>

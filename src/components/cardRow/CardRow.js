@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Card from '../Card/Card';
+import CardMain  from '../Card/CardMain';
+import CardLikes  from '../Card/CardLikes';
 import classes from  './CardRow.module.scss';
 import Pagination from '../pagination/Pagination';
 import State from "../../state/state";
@@ -22,7 +23,7 @@ const CardRow  = (props) => {
     } else {
       arr = arr.filter(elem =>  elem.url !== url)
     }
-    
+    console.log(arr)
     return(arr)
   }
  
@@ -44,12 +45,13 @@ const CardRow  = (props) => {
         <div>PS: Make sure to set your access token!</div>
       </div>
     );
-  }else if(data !== null) {
+  }else if(data !== null && props.cardsPrefer === false) {
+    console.log(props.cardsPrefer)
     return (
       <div className={classes.cardRow} >
           {data.response.results.map(photo => (
             <div key={photo.id} className = {classes.cardCol}>
-              <Card photo={photo}
+              <CardMain photo={photo}
                     getLike={ () => setPreferPhotos(getLike(photo.user.name, photo.urls.regular, photosArr ))}
                   />
             </div>
@@ -64,24 +66,23 @@ const CardRow  = (props) => {
                       />
       </div>
     );
-  }else if(data !== null && props.cardsPrefer===true) {
+  }else if( props.cardsPrefer === true) {
+    console.log(photosArr)
     return (
       <div className={classes.cardRow} >
           {photosArr.map(photo => (
             <div key={photo.id} className = {classes.cardCol}>
-              <Card photo={photo}
-                    getLike={ () => setPreferPhotos(getLike(photo.user.name, photo.urls.regular, photosArr ))}
-                  />
+              <CardLikes photo={photo}/>
             </div>
           ))}
-             <Pagination 
+             {/* <Pagination 
                       itemAmount= {items}
                       totalItem= {data.response.total}
                       curentPage= {count}
                       PageRender= {PageRender}
                       onNextPage= { () => state.getNextPage(count,PageRender) }
                       onPrevPage= { () => state.getPrevPage(items,count,PageRender) }
-                      />
+                      /> */}
       </div>
     );
   }
