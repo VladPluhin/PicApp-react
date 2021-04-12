@@ -4,12 +4,12 @@ import Nav from '../Nav/Nav'
 import Logo from "../Logo/Logo";
 
 
-const Header = () => {
+const Header = (props) => {
     return (
         <header className = {classes.header}>
             <div className={classes.container}>
                 <Logo/>
-                <Nav/>
+                <Nav  getrenderCards={()=> props.changeCardRows }/>
             </div>
         </header>
     )

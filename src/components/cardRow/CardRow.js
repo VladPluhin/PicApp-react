@@ -37,17 +37,37 @@ const CardRow  = (props) => {
  
    if (data === null) {
     return<Spinner/>;
-  } else if (data.errors) {
+  }else if (data.errors) {
     return (
       <div>
         <div>{data.errors[0]}</div>
         <div>PS: Make sure to set your access token!</div>
       </div>
     );
-  } else {
+  }else if(data !== null) {
     return (
       <div className={classes.cardRow} >
           {data.response.results.map(photo => (
+            <div key={photo.id} className = {classes.cardCol}>
+              <Card photo={photo}
+                    getLike={ () => setPreferPhotos(getLike(photo.user.name, photo.urls.regular, photosArr ))}
+                  />
+            </div>
+          ))}
+             <Pagination 
+                      itemAmount= {items}
+                      totalItem= {data.response.total}
+                      curentPage= {count}
+                      PageRender= {PageRender}
+                      onNextPage= { () => state.getNextPage(count,PageRender) }
+                      onPrevPage= { () => state.getPrevPage(items,count,PageRender) }
+                      />
+      </div>
+    );
+  }else if(data !== null && props.cardsPrefer===true) {
+    return (
+      <div className={classes.cardRow} >
+          {photosArr.map(photo => (
             <div key={photo.id} className = {classes.cardCol}>
               <Card photo={photo}
                     getLike={ () => setPreferPhotos(getLike(photo.user.name, photo.urls.regular, photosArr ))}

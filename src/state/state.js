@@ -9,7 +9,7 @@ export default class  State {
         accessKey: "k6MK8xSwdSo_9QcKO4iLm0r_nirfy7FUADRtpAMqhRw",
         headers: { 'X-Custom-Header': 'foo' }
     });
-   
+ 
     getPrevPage(item,count,func) {
       if(item > 1){
         return func(count - 1);
@@ -33,9 +33,11 @@ export default class  State {
         page: count,
         perPage: items,
       }) 
+     
       .then(result => {
         func(result);
       })
+      
       .catch(() => {
         console.log("something went wrong!");
       });
@@ -44,5 +46,20 @@ export default class  State {
    GetPreferPhotos(author ,url) {
       this.author = author;
       this.url = url;
+    }
+    
+    getRenderCards(funct, seletcRow) {
+      switch (seletcRow){
+          case false:
+          seletcRow = true;
+          console.log(0)
+          return funct(seletcRow);
+          break;
+          case true:
+          seletcRow = false;
+          console.log(1)
+          return funct(seletcRow);
+          break;
+      }
     }
 }
