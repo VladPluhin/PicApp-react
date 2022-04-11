@@ -1,29 +1,31 @@
 import React, { useState} from 'react';
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import Header from  './components/Header/Header';
-import State from  './state/state';
-import SectionMain from './components/sectionMain/SectionMain';
-import SectionAbout from './components/sectionAbout/SectionAbout';
+import SectionMain from './components/SectionMain/SectionMain';
+import SectionAbout from './components/SectionAbout/SectionAbout';
+import SectionLikedPost from './components/SectionLikedPost/SectionLikedPost';
 
 const App = () => {
-  const state = new State;
-  const [pageData, setNewPage  ]= useState(false);
-
+  const [likePostData, setLikedPost]= useState([]);
   return(
-        <Router>
-          <Header changeCardRows={ () =>state.getRenderCards(setNewPage, pageData)}/>
+      <Router >
+          <Header/>
           <Switch>
               <Route path= "/"
-                     exact
-                      render = { (  )   => {
-                      return <SectionMain orientation= {' '}/>
-                    }}/>
-              <Route path= "/about/" component={SectionAbout}/>
-              <Route path='/liked-photos/' 
-                    render = { (  )   => {
-                    return <SectionMain cardsPrefer= {pageData}/>
+                exact
+                render = {()=> {
+                  return <SectionMain
+                      likePostData={likePostData}
+                      setLikedPost= {setLikedPost}/>
                 }}/>
-               <Route 
+              <Route path= "/about/" component={SectionAbout}/>
+              <Route path='/liked-photos/'
+                    render = {()=> {
+                    return <SectionLikedPost
+                      likePostData={likePostData}
+                      setLikedPost= {setLikedPost}/>
+                }}/>
+               <Route
                     render = {()=> {
                       return <h1>Page not Found</h1>
                     }}/>

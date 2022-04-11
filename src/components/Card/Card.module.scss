@@ -1,5 +1,4 @@
 .card {
-  cursor: pointer;
   position: relative;
   display: block;
   color:#ffffff;
@@ -8,30 +7,54 @@
   border-radius: 8px;
   margin-bottom: 15px;
   overflow: hidden;
+
   strong {
     text-transform: uppercase;
     color: #ff6a6a;
     text-shadow: 1px 1px 1px #000;
   }
+
   h3 {
     display: flex;
     justify-content: space-between;
   }
+
   &:hover {
+
     .cardBody {
       opacity: 1;
       visibility: visible;
     }
   }
-}
 
-.date { 
+
+}
+  .btnLike,
+  .btnDelet {
+    color: #000;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: color .3s ease;
+    text-shadow: 0px 0px 10px rgba(160, 224, 255,1);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+.date {
   display: block;
 }
 
 .cardImg {
   display: flex;
   object-fit: cover;
+
   img {
     border-radius: 8px;
     width: 100%;
@@ -44,18 +67,22 @@
 }
 
 .title {
-
   transition: all .3 ease;
   display: inline-block;
   margin-bottom: 10px;
   text-shadow: 1px 1px 1px #000;
   color: #fff;
-  font-size: 22px;
+  font-size: 16px;
   text-decoration: none;
+  display: block;
+
   &:hover {
     color: #5cbbff;
   }
 
+  span {
+    display: block;
+  }
 }
 
 .cardBody {
@@ -75,4 +102,21 @@
   justify-content: center;
   flex-direction: column;
   bottom: 0;
+}
+
+
+.description {
+  padding: 10px;
+  font-size: 12px;
+    p {
+     overflow: hidden;
+      text-overflow: ellipsis;
+      display: -moz-box;
+      -moz-box-orient: vertical;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-clamp: 2;
+      box-orient: vertical;
+      }
 }

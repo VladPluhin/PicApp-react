@@ -6,26 +6,41 @@ const Pagination = (props) => {
     const  hasPrev = () => {
         return props.curentPage > 1;
     }
+
+    function getPrevPage(item, count, func) {
+      if(item > 1){
+        return func(count - 1);
+      }
+    }
+
+    function getNextPage(count, func) {
+      return func(count + 1);
+    }
+
     const pageAmount= () => {
         return Math.ceil(props.totalItem / props.itemAmount )
     }
+
     return(
         <ul className={classes.pagination}>
             <li>
-                <span 
+                <span
                     role="button"
                     className= { !hasPrev() ? "hidden page" : "page"}
-                    onClick={props.onPrevPage}> Prev </span>
+                    onClick={()=>
+                        getPrevPage(props.itemAmount, props.curentPage, props.PageRender)}>
+                    Prev </span>
             </li>
             <li>
                 <span>
                     {pageAmount()}
-                </span> 
+                </span>
             </li>
             <li>
-                <span  className='page'
+                <span className='page'
                     role="button"
-                    onClick={props.onNextPage}> Next </span>
+                    onClick={()=>
+                    getNextPage( props.curentPage, props.PageRender)}>Next </span>
             </li>
         </ul>
     )

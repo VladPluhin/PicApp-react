@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from  './Header.module.scss';
-import Nav from '../Nav/Nav'
-import Logo from "../Logo/Logo";
+import Nav from './Nav/Nav'
+import Logo from "./Logo/Logo";
 
 
 const Header = (props) => {
@@ -9,7 +9,7 @@ const Header = (props) => {
         <header className = {classes.header}>
             <div className={classes.container}>
                 <Logo/>
-                <Nav  getrenderCards={()=> props.changeCardRows }/>
+                <Nav />
             </div>
         </header>
     )

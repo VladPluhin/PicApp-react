@@ -1,89 +1,53 @@
-import React, { useEffect, useState } from "react";
-import Card from '../Card/Card';
-import classes from  './CardRow.module.scss';
-import Pagination from '../pagination/Pagination';
-import State from "../../state/state";
-import Spinner from '../spiner/spiner';
+import React, { } from "react";
+import classes from "./cardRow.module.scss";
+import Card from "../Card/Card";
+import Pagination from "../Pagination/Pagination";
 
-const CardRow  = (props) => { 
-  const state = new State;
-  const apiData= state.createApi;
-  const items= 8;
-  const [data, setPhotosResponse] = useState(null);
-  const [count, PageRender] = useState(1);
-  const [photosArr, setPreferPhotos] = useState([]);
- 
-  const getLike =(author ,url,arr) => {
-    let selectPhoto = new GetUser(author, url);
-    const even=(elem) => elem.url == url;
-    
-    if(arr.some(even) !=true ){
-      arr.push(selectPhoto);
-    } else {
-      arr = arr.filter(elem =>  elem.url !== url)
+const CardRow = (props) => {
+
+ if(props.likesRow==false) {
+      return (
+        <div className={classes.cardRow}>
+            {props.data.results.map((card) => (
+              <div key={card.id} className={classes.cardCol}>
+                <Card
+                  likesRow={false}
+                  setLikedPost={props.setLikedPost}
+                  likePostData={props.likePostData}
+                  card={card}
+                />
+              </div>
+            ))}
+            <Pagination
+              itemAmount={props.items}
+              curentPage={props.count}
+              totalItem= {props.data.total}
+              PageRender={props.PageRender}
+            />
+          </div>
+      )
+ }else {
+    if(props.likePostData.length==0) {
+        return(
+          <h1>No posts chosen</h1>
+        )
+      }else {
+        return(
+          <div className={classes.cardRow}>
+              {props.likePostData.map((card) => (
+                  <div key={card.id} className={classes.cardCol}>
+                    <Card
+                      likesRow={true}
+                      setLikedPost={props.setLikedPost}
+                      likePostData={props.likePostData}
+                      card={card}
+                    />
+                  </div>
+              ))}
+          </div>
+        )
+      }
     }
-    
-    return(arr)
-  }
- 
-  function GetUser(author ,url) {
-    this.author = author;
-    this.url = url;
-  }
+};
 
-  useEffect(() => {
-    state.getApiReport(count, items, setPhotosResponse);
-   }, [count]);
- 
-   if (data === null) {
-    return<Spinner/>;
-  }else if (data.errors) {
-    return (
-      <div>
-        <div>{data.errors[0]}</div>
-        <div>PS: Make sure to set your access token!</div>
-      </div>
-    );
-  }else if(data !== null) {
-    return (
-      <div className={classes.cardRow} >
-          {data.response.results.map(photo => (
-            <div key={photo.id} className = {classes.cardCol}>
-              <Card photo={photo}
-                    getLike={ () => setPreferPhotos(getLike(photo.user.name, photo.urls.regular, photosArr ))}
-                  />
-            </div>
-          ))}
-             <Pagination 
-                      itemAmount= {items}
-                      totalItem= {data.response.total}
-                      curentPage= {count}
-                      PageRender= {PageRender}
-                      onNextPage= { () => state.getNextPage(count,PageRender) }
-                      onPrevPage= { () => state.getPrevPage(items,count,PageRender) }
-                      />
-      </div>
-    );
-  }else if(data !== null && props.cardsPrefer===true) {
-    return (
-      <div className={classes.cardRow} >
-          {photosArr.map(photo => (
-            <div key={photo.id} className = {classes.cardCol}>
-              <Card photo={photo}
-                    getLike={ () => setPreferPhotos(getLike(photo.user.name, photo.urls.regular, photosArr ))}
-                  />
-            </div>
-          ))}
-             <Pagination 
-                      itemAmount= {items}
-                      totalItem= {data.response.total}
-                      curentPage= {count}
-                      PageRender= {PageRender}
-                      onNextPage= { () => state.getNextPage(count,PageRender) }
-                      onPrevPage= { () => state.getPrevPage(items,count,PageRender) }
-                      />
-      </div>
-    );
-  }
-}
 export default CardRow;
