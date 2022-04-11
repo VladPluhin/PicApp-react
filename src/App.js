@@ -4,26 +4,23 @@ import Header from  './components/Header/Header';
 import SectionMain from './components/SectionMain/SectionMain';
 import SectionAbout from './components/SectionAbout/SectionAbout';
 import SectionLikedPost from './components/SectionLikedPost/SectionLikedPost';
-
+import { LikesContext } from './context/context';
 const App = () => {
   const [likePostData, setLikedPost]= useState([]);
   return(
-      <Router >
+      <LikesContext.Provider value={{likePostData, setLikedPost}}>
+          <Router >
           <Header/>
           <Switch>
               <Route path= "/"
                 exact
                 render = {()=> {
-                  return <SectionMain
-                      likePostData={likePostData}
-                      setLikedPost= {setLikedPost}/>
+                  return <SectionMain/>
                 }}/>
               <Route path= "/about/" component={SectionAbout}/>
               <Route path='/liked-photos/'
                     render = {()=> {
-                    return <SectionLikedPost
-                      likePostData={likePostData}
-                      setLikedPost= {setLikedPost}/>
+                    return <SectionLikedPost/>
                 }}/>
                <Route
                     render = {()=> {
@@ -33,6 +30,8 @@ const App = () => {
           {/* <Route path= "/contact/" component={ContactPage}/>
           <Route path= "/product/" component={ProductPage}/> */}
         </Router >
+      </LikesContext.Provider>
+
   )
 }
 

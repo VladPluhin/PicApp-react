@@ -1,10 +1,12 @@
 import React, {  useState } from 'react';
 import classes from './card.module.scss';
 // import PropTypes from 'prop-types';
+import { LikesContext } from '../../context/context';
 
 
 const Card = ( props) => {
 	const card = props.card;
+	const {likePostData,setLikedPost} = useContext(LikesContext);
 	function GetAuthor(card) {
 		return this.card = card;
 	}
@@ -25,7 +27,6 @@ const Card = ( props) => {
 	};
 
 	const deletedPost = (card, arr)=> {
-		console.log(props.likePostData)
 		var filtered = arr.filter(function(el) { return el.id != card.id; });
 		return filtered
 	}
@@ -38,13 +39,13 @@ const Card = ( props) => {
 			<div className= {classes.cardBody}>
 				{props.likesRow ?
 					<button className={classes.btnDelet}
-						onClick={()=>props.setLikedPost(
-							deletedPost(props.card, props.likePostData))}>
+						onClick={()=>setLikedPost(
+							deletedPost(props.card, likePostData))}>
 						&#9747;
 					</button>:
 					<button className={classes.btnLike}
-						onClick={()=>props.setLikedPost(
-							getLike(props.card, props.likePostData))}>
+						onClick={()=>setLikedPost(
+							getLike(props.card, likePostData))}>
 						&#10084;
 					</button>
 				 }
