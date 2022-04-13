@@ -44,7 +44,7 @@ const SectionMain = (props) => {
 
   useEffect(() => {
     var callback = function (entries, observer) {
-      if (data === null) {return;}
+      // if (data === null) {return;}
       if (observer.current) observer.current.disconnect();
       if (entries[0].isIntersecting) {
       console.log(1)
