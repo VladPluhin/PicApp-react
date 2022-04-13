@@ -3,16 +3,17 @@ import classes from "./sectionMain.module.scss";
 import CardRow from "../CardRow/CardRow";
 import Spinner from "../Spiner/Spiner";
 import State from "../../state/state";
+import { compileString } from "sass";
 
 const SectionMain = (props) => {
   const state = new State();
-  const [data, setPhotosResponse] = useState(null);
+  const [data, setRespones] = useState(null);
   const [count, PageRender] = useState(1);
   const [posts, setPosts] = useState([]);
   const lastElement = useRef();
   const observer = useRef();
 
-  function getApiReport(count, setRespones) {
+  function getApiReport(setRespones , count ) {
     return state.createApi.photos
       .list({
         page: count,
@@ -20,7 +21,6 @@ const SectionMain = (props) => {
       })
       .then((result) => {
         setRespones(result);
-        getPosts(posts, result)
       })
       .catch(() => {
         console.log("something went wrong!");
@@ -28,32 +28,33 @@ const SectionMain = (props) => {
   }
 
   function getPosts (posts, data) {
-    if(data !== null ) {
-        let newArr = [...posts, ...data.response.results]
+    if(data !== null) {
+     console.log(count)
+       let  newArr = [...posts, ...data.response.results]
         return setPosts(newArr)
     }
   }
 
   useEffect(() => {
-    getApiReport(count, setPhotosResponse);
-  }, []);
-
-  useEffect(() => {
-    getApiReport(count, setPhotosResponse);
+    getApiReport( setRespones,count);
   }, [count]);
 
   useEffect(() => {
+    getPosts(posts, data);
+  }, [data]);
+
+  useEffect((count) => {
     var callback = function (entries, observer) {
-      // if (data === null) {return;}
       if (observer.current) observer.current.disconnect();
       if (entries[0].isIntersecting) {
-      console.log(1)
-        return getApiReport(PageRender(count + 1), setPhotosResponse);
+
+        return PageRender(count)
       }
     };
     observer.current = new IntersectionObserver(callback);
     observer.current.observe(lastElement.current);
   }, []);
+
 
   if (posts.length === 0) {
     return (
