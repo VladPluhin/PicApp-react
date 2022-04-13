@@ -6,5 +6,4 @@ export default class  State {
         accessKey: "k6MK8xSwdSo_9QcKO4iLm0r_nirfy7FUADRtpAMqhRw",
         headers: { 'X-Custom-Header': 'foo' }
     });
-
 }

@@ -1,53 +1,37 @@
-import React, { } from "react";
+import React, { useContext } from "react";
 import classes from "./cardRow.module.scss";
 import Card from "../Card/Card";
-import Pagination from "../Pagination/Pagination";
+import { LikesContext } from "../../context/context";
 
 const CardRow = (props) => {
+  const { likePostData } = useContext(LikesContext);
 
- if(props.likesRow==false) {
+  if (props.likesRow == false) {
+    return (
+      <div className={classes.cardRow}>
+        {props.data.map((card, id) => (
+          <div key={id + 1} className={classes.cardCol}>
+            <Card likesRow={false} card={card} />
+          </div>
+        ))}
+
+      </div>
+    );
+  } else {
+    if (likePostData.length == 0) {
+      return <h1>No posts chosen</h1>;
+    } else {
       return (
         <div className={classes.cardRow}>
-            {props.data.results.map((card) => (
-              <div key={card.id} className={classes.cardCol}>
-                <Card
-                  likesRow={false}
-                  setLikedPost={props.setLikedPost}
-                  likePostData={props.likePostData}
-                  card={card}
-                />
-              </div>
-            ))}
-            <Pagination
-              itemAmount={props.items}
-              curentPage={props.count}
-              totalItem= {props.data.total}
-              PageRender={props.PageRender}
-            />
-          </div>
-      )
- }else {
-    if(props.likePostData.length==0) {
-        return(
-          <h1>No posts chosen</h1>
-        )
-      }else {
-        return(
-          <div className={classes.cardRow}>
-              {props.likePostData.map((card) => (
-                  <div key={card.id} className={classes.cardCol}>
-                    <Card
-                      likesRow={true}
-                      setLikedPost={props.setLikedPost}
-                      likePostData={props.likePostData}
-                      card={card}
-                    />
-                  </div>
-              ))}
-          </div>
-        )
-      }
+          {likePostData.map((card) => (
+            <div key={card.id} className={classes.cardCol}>
+              <Card likesRow={true} card={card} />
+            </div>
+          ))}
+        </div>
+      );
     }
+  }
 };
 
 export default CardRow;

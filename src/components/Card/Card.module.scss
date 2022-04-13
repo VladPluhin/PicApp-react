@@ -7,7 +7,7 @@
   border-radius: 8px;
   margin-bottom: 15px;
   overflow: hidden;
-
+  min-height: 180px;
   strong {
     text-transform: uppercase;
     color: #ff6a6a;
@@ -108,7 +108,7 @@
 .description {
   padding: 10px;
   font-size: 12px;
-    p {
+   p {
      overflow: hidden;
       text-overflow: ellipsis;
       display: -moz-box;

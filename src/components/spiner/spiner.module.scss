@@ -9,7 +9,7 @@
   0% { transform: rotate(0deg) }
   50% { transform: rotate(-180deg) }
   100% { transform: rotate(-360deg) }
-} 
+}
 
 .spiner div {
   position: absolute;
@@ -37,6 +37,10 @@
     transform-origin: 71px 73px;
     box-shadow: 0 7px 0 0 #070aa1;
   }
+}
+
+.spinnerWrapper {
+  min-height: 750px ;
 }
 
 .loadingioSpinner {
