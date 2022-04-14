@@ -1,16 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState , useEffect, useRef} from "react";
 import classes from "./card.module.scss";
-// import PropTypes from 'prop-types';
 import { LikesContext } from "../../context/context";
+import Popup from "../Popup/Popup";
 
 const Card = (props) => {
   const card = props.card;
   const { likePostData, setLikedPost } = useContext(LikesContext);
-
-  function GetAuthor(card) {
+  const [hovered, setHovered] = useState(false);
+  const cardLeav = useRef();
+  const hoveredEl = useRef();
+  const handleLeave=()=> {return setHovered(false)}
+  const handleHover=()=> { return setHovered(true)}
+  const GetAuthor=(card)=> {
     return (this.card = card);
   }
-
   const getLike = (card, arr) => {
     let selectPhoto = new GetAuthor(card);
     let newArr = arr;
@@ -25,7 +28,6 @@ const Card = (props) => {
 
     return newArr;
   };
-
   const deletedPost = (card, arr) => {
     var filtered = arr.filter(function (el) {
       return el.id != card.id;
@@ -33,34 +35,57 @@ const Card = (props) => {
     return filtered;
   };
 
+ useEffect(() => {
+    if (hoveredEl.current) {
+      hoveredEl.current.addEventListener("mouseenter", handleHover);
+      cardLeav.current.addEventListener("mouseleave", handleLeave);
+
+      return () => {
+        hoveredEl.current.removeEventLisener("mouseenter", handleHover);
+        cardLeav.current.removeEventLisener("mouseleave", handleLeave);
+      };
+    }
+  }, [])
   return (
-    <div className={classes.card}>
+    <div className={classes.card} onMouseLeave={ handleLeave} ref={cardLeav}>
       <div className={classes.cardImg}>
         <img className="img" src={card.urls.regular} />
       </div>
       <div className={classes.cardBody}>
-        {props.likesRow ? <button className={classes.btnDelet}
-            onClick={() => setLikedPost(deletedPost(props.card, likePostData))}>
+        {props.likesRow ? (
+          <button
+            className={classes.btnDelet}
+            onClick={() => setLikedPost(deletedPost(props.card, likePostData))}
+          >
             &#9747;
-          </button>:
-          <button className={classes.btnLike}
-            onClick={() => setLikedPost(getLike(props.card, likePostData))}>
-          &#10084;
           </button>
-        }
+        ) : (
+          <button
+            className={classes.btnLike}
+            onClick={() => setLikedPost(getLike(props.card, likePostData))}
+          >
+            &#10084;
+          </button>
+        )}
+        <time
+          className={classes.date}
+          dateTime={
+            props.card.created_at ? props.card.created_at.slice(0, 10) : ""
+          }
+        >
+          {props.card.created_at ? props.card.created_at.slice(0, 10) : ""}
+        </time>
         <div className={classes.description}>
           {props.card.description ? <p> {props.card.description} </p> : " "}
         </div>
-        <a href={`https://unsplash.com/@${card.user.username}`}
-          className={classes.title}>
-            <span>Author:</span>
-            {card.name ? card.name : card.user.username}
-        </a>
-         <time className={classes.date} dateTime={
-            props.card.created_at ? props.card.created_at.slice(0, 10) : "" }>
-            {props.card.created_at ? props.card.created_at.slice(0, 10) : ""}
-        </time>
+        <span className={classes.title} onMouseOver={handleHover} ref={ hoveredEl}
+        >
+          <span>Author:</span>
+          {card.name ? card.name : card.user.username}
+
+        </span>
       </div>
+      {hovered? <Popup user= {props.card.user}/> : ''}
     </div>
   );
 };

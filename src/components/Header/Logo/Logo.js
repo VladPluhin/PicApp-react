@@ -5,7 +5,7 @@ import classes from "./logo.module.scss";
 const Logo = () => {
   return (
     <div className={classes.logo}>
-      <Link to="/">PicApp</Link>
+      <Link to="/">PictureApp</Link>
     </div>
   );
 };
