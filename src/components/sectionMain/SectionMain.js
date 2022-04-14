@@ -3,21 +3,19 @@ import classes from "./sectionMain.module.scss";
 import CardRow from "../CardRow/CardRow";
 import Spinner from "../Spiner/Spiner";
 import State from "../../state/state";
-import { compileString } from "sass";
+import {useObserver} from "../../hooks/useObserver";
+
 
 const SectionMain = (props) => {
   const state = new State();
   const [data, setRespones] = useState(null);
-  const [count, PageRender] = useState(1);
+  const [page, PageRender] = useState(1);
   const [posts, setPosts] = useState([]);
   const lastElement = useRef();
-  const observer = useRef();
-
-  function getApiReport(setRespones , count ) {
+  function getApiReport(setRespones , page ) {
     return state.createApi.photos
       .list({
-        page: count,
-        perPage: 4
+        page: page,
       })
       .then((result) => {
         setRespones(result);
@@ -27,33 +25,26 @@ const SectionMain = (props) => {
       });
   }
 
+
+
   function getPosts (posts, data) {
     if(data !== null) {
-     console.log(count)
-       let  newArr = [...posts, ...data.response.results]
-        return setPosts(newArr)
+      let  newArr = [...posts, ...data.response.results]
+      return setPosts(newArr)
     }
   }
 
   useEffect(() => {
-    getApiReport( setRespones,count);
-  }, [count]);
+    getApiReport( setRespones, page);
+  }, [page]);
 
   useEffect(() => {
     getPosts(posts, data);
   }, [data]);
 
-  useEffect((count) => {
-    var callback = function (entries, observer) {
-      if (observer.current) observer.current.disconnect();
-      if (entries[0].isIntersecting) {
-
-        return PageRender(count)
-      }
-    };
-    observer.current = new IntersectionObserver(callback);
-    observer.current.observe(lastElement.current);
-  }, []);
+  useObserver(lastElement, data, ()=> {
+    PageRender(page + 1)
+  }, page)
 
 
   if (posts.length === 0) {
@@ -61,7 +52,7 @@ const SectionMain = (props) => {
       <section className={classes.sectionMain}>
         <div className="container">
           <Spinner />
-          <div ref={lastElement} style={{ height: 20, background: '#fff' }}></div>
+          <div ref={lastElement} style={{ height: 5}}></div>
         </div>
       </section>
     );
@@ -71,11 +62,11 @@ const SectionMain = (props) => {
         <div className="container">
           <CardRow
             data={posts}
-            count={count}
+            page={page}
             PageRender={PageRender}
             likesRow={false}
           />
-          <div ref={lastElement} style={{ height: 20 , background: '#fff'}}></div>
+          <div ref={lastElement} style={{ height: 5}}></div>
         </div>
       </section>
     );

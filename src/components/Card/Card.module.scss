@@ -7,7 +7,6 @@
   border-radius: 8px;
   margin-bottom: 15px;
   overflow: hidden;
-  min-height: 180px;
   strong {
     text-transform: uppercase;
     color: #ff6a6a;
@@ -49,6 +48,10 @@
 
 .date {
   display: block;
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  font-size: 12px;
 }
 
 .cardImg {

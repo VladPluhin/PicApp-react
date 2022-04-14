@@ -6,6 +6,7 @@ import { LikesContext } from "../../context/context";
 const Card = (props) => {
   const card = props.card;
   const { likePostData, setLikedPost } = useContext(LikesContext);
+
   function GetAuthor(card) {
     return (this.card = card);
   }
@@ -38,39 +39,27 @@ const Card = (props) => {
         <img className="img" src={card.urls.regular} />
       </div>
       <div className={classes.cardBody}>
-        {props.likesRow ? (
-          <button
-            className={classes.btnDelet}
-            onClick={() => setLikedPost(deletedPost(props.card, likePostData))}
-          >
+        {props.likesRow ? <button className={classes.btnDelet}
+            onClick={() => setLikedPost(deletedPost(props.card, likePostData))}>
             &#9747;
+          </button>:
+          <button className={classes.btnLike}
+            onClick={() => setLikedPost(getLike(props.card, likePostData))}>
+          &#10084;
           </button>
-        ) : (
-          <button
-            className={classes.btnLike}
-            onClick={() => setLikedPost(getLike(props.card, likePostData))}
-          >
-            &#10084;
-          </button>
-        )}
-        <time
-          className={classes.date}
-          dateTime={
-            props.card.created_at ? props.card.created_at.slice(0, 10) : ""
-          }
-        >
-          {props.card.created_at ? props.card.created_at.slice(0, 10) : ""}
-        </time>
+        }
         <div className={classes.description}>
           {props.card.description ? <p> {props.card.description} </p> : " "}
         </div>
-        <a
-          href={`https://unsplash.com/@${card.user.username}`}
-          className={classes.title}
-        >
-          <span>Author:</span>
-          {card.name ? card.name : card.user.username}
+        <a href={`https://unsplash.com/@${card.user.username}`}
+          className={classes.title}>
+            <span>Author:</span>
+            {card.name ? card.name : card.user.username}
         </a>
+         <time className={classes.date} dateTime={
+            props.card.created_at ? props.card.created_at.slice(0, 10) : "" }>
+            {props.card.created_at ? props.card.created_at.slice(0, 10) : ""}
+        </time>
       </div>
     </div>
   );
