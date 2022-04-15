@@ -9,8 +9,15 @@ const Card = (props) => {
   const [hovered, setHovered] = useState(false);
   const hoverOff = useRef();
   const hoverOn = useRef();
-  const handleLeave=()=> {return setHovered(false)}
-  const handleHover=()=> { return setHovered(true)}
+  const gethoverOff=()=> {
+    setHovered(false)
+    return  ()=> {hoverOff.current.removeEventLisener("mouseleave", gethoverOff)}
+  }
+
+  const gethoverOn=()=> {
+    setHovered(true)
+    return  ()=> {hoverOn.current.removeEventLisener("mouseenter", gethoverOn)};
+  }
 
  const getLike = (card, arr) => {
     let selectPhoto =card ;
@@ -35,7 +42,7 @@ const Card = (props) => {
 
 
   return (
-    <div className={classes.card} onMouseLeave={handleLeave} ref={hoverOff}>
+    <div className={classes.card}  ref={hoverOff} onMouseLeave={gethoverOff}>
       <div className={classes.cardImg}>
         <img className="img" src={card.urls.regular} />
       </div>
@@ -54,7 +61,7 @@ const Card = (props) => {
         <div className={classes.description}>
           {props.card.description ? <p> {props.card.description} </p> : " "}
         </div>
-        <span className={classes.title} onMouseOver={handleHover} ref={ hoverOn}>
+        <span className={classes.title}  ref={ hoverOn} onMouseOver={gethoverOn}>
           <span>Author:</span>
           {card.name ? card.name : card.user.username}
         </span>

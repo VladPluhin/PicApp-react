@@ -16,11 +16,11 @@ const App = () => {
       <Router>
         <Header />
         <Switch>
-          <Route path="/" exact component={SectionMain} />
-          <Route path="/about/" component={SectionAbout} />
-          <Route path="/liked-photos/" component={SectionLikedPost} />
+          <Route path="/" exact   render={() => <SectionMain/>}/>
+          <Route path="/about/"   render={() => <SectionAbout/>}/>
+          <Route path="/liked-photos/"  render={() => <SectionLikedPost/>} />
           <Route
-            render={() => {
+render={() => {
               return <h1>Page not Found</h1>;
             }}
           />
