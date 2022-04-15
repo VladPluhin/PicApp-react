@@ -7,15 +7,13 @@ const Card = (props) => {
   const card = props.card;
   const { likePostData, setLikedPost } = useContext(LikesContext);
   const [hovered, setHovered] = useState(false);
-  const cardLeav = useRef();
-  const hoveredEl = useRef();
+  const hoverOff = useRef();
+  const hoverOn = useRef();
   const handleLeave=()=> {return setHovered(false)}
   const handleHover=()=> { return setHovered(true)}
-  const GetAuthor=(card)=> {
-    return (this.card = card);
-  }
-  const getLike = (card, arr) => {
-    let selectPhoto = new GetAuthor(card);
+
+ const getLike = (card, arr) => {
+    let selectPhoto =card ;
     let newArr = arr;
     const even = (item) => item.id == selectPhoto.id;
     if (newArr.length === 0) {
@@ -35,54 +33,30 @@ const Card = (props) => {
     return filtered;
   };
 
- useEffect(() => {
-    if (hoveredEl.current) {
-      hoveredEl.current.addEventListener("mouseenter", handleHover);
-      cardLeav.current.addEventListener("mouseleave", handleLeave);
 
-      return () => {
-        hoveredEl.current.removeEventLisener("mouseenter", handleHover);
-        cardLeav.current.removeEventLisener("mouseleave", handleLeave);
-      };
-    }
-  }, [])
   return (
-    <div className={classes.card} onMouseLeave={ handleLeave} ref={cardLeav}>
+    <div className={classes.card} onMouseLeave={handleLeave} ref={hoverOff}>
       <div className={classes.cardImg}>
         <img className="img" src={card.urls.regular} />
       </div>
       <div className={classes.cardBody}>
-        {props.likesRow ? (
-          <button
-            className={classes.btnDelet}
-            onClick={() => setLikedPost(deletedPost(props.card, likePostData))}
-          >
+        {props.likesRow ?
+          <button className={classes.btnDelet} onClick={() => setLikedPost(deletedPost(props.card, likePostData))}>
             &#9747;
           </button>
-        ) : (
-          <button
-            className={classes.btnLike}
-            onClick={() => setLikedPost(getLike(props.card, likePostData))}
-          >
+         : <button className={classes.btnLike} onClick={() => setLikedPost(getLike(props.card, likePostData))} >
             &#10084;
           </button>
-        )}
-        <time
-          className={classes.date}
-          dateTime={
-            props.card.created_at ? props.card.created_at.slice(0, 10) : ""
-          }
-        >
+        }
+        <time className={classes.date} dateTime={props.card.created_at ? props.card.created_at.slice(0, 10) : ""}>
           {props.card.created_at ? props.card.created_at.slice(0, 10) : ""}
         </time>
         <div className={classes.description}>
           {props.card.description ? <p> {props.card.description} </p> : " "}
         </div>
-        <span className={classes.title} onMouseOver={handleHover} ref={ hoveredEl}
-        >
+        <span className={classes.title} onMouseOver={handleHover} ref={ hoverOn}>
           <span>Author:</span>
           {card.name ? card.name : card.user.username}
-
         </span>
       </div>
       {hovered? <Popup user= {props.card.user}/> : ''}

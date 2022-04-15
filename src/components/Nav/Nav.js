@@ -2,6 +2,7 @@ import React from "react";
 import "./nav.scss";
 import {  Link } from "react-router-dom";
 
+
 const Nav = (props) => {
   return (
     <ul className="navLists">
@@ -11,6 +12,7 @@ const Nav = (props) => {
       <li>
         <Link to="/about"> about</Link>
       </li>
+
     </ul>
   );
 };

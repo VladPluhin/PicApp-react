@@ -12,22 +12,19 @@ const SectionMain = (props) => {
   const [page, PageRender] = useState(1);
   const [posts, setPosts] = useState([]);
   const lastElement = useRef();
-  function getApiReport(setRespones , page ) {
-    return state.createApi.photos
-      .list({
-        page: page,
-      })
-      .then((result) => {
-        setRespones(result);
-      })
-      .catch(() => {
-        console.log("something went wrong!");
-      });
-  }
-
-
-
-  function getPosts (posts, data) {
+  const getApiReport=(setRespones , page ) => {
+      return state.createApi.photos
+        .list({
+          page: page,
+        })
+        .then((result) => {
+          setRespones(result);
+        })
+        .catch(() => {
+          console.log("something went wrong!");
+        });
+    }
+  const getPosts=  (posts, data) => {
     if(data !== null) {
       let  newArr = [...posts, ...data.response.results]
       return setPosts(newArr)

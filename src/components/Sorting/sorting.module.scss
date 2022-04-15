@@ -1,0 +1,45 @@
+.sortingclose {
+    background-color: transparent;
+    border: none;
+    width: 40px;
+    height: 20px;
+    position: relative;
+    padding: 0;
+    margin-bottom: 15px;
+    cursor: pointer;
+    span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 1px;
+        right: 0;
+        background-color: #fff;
+
+        &:after {
+            position: absolute;
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            border: 1px solid #fff;
+            background-color: #fff;
+            top: -3px;
+            left: 15px;
+        }
+
+        &:nth-child(2) {
+            top: 10px;
+            &:after {
+                left: 10px;
+            }
+        }
+
+        &:nth-child(3) {
+            bottom: 0;
+            top: auto;
+            &:after {
+                left:25px;
+            }
+        }
+    }
+}

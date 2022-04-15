@@ -21,7 +21,7 @@ const Popup = (props) => {
             </div>
         </div>
         <div className={classes.btnWrapper}>
-            <a href={user.links.portfolio} className={classes.btnView}> View Portfolio</a>
+            <a href={user.links.self} className={classes.btnView}> View Portfolio</a>
         </div>
       </div >
   )
