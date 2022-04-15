@@ -4,7 +4,7 @@ import CardRow from "../CardRow/CardRow";
 import Spinner from "../Spiner/Spiner";
 import State from "../../state/state";
 import {useObserver} from "../../hooks/useObserver";
-
+import Sorting from "../Sorting/Sorting";
 
 const SectionMain = (props) => {
   const state = new State();
@@ -12,19 +12,21 @@ const SectionMain = (props) => {
   const [page, PageRender] = useState(1);
   const [posts, setPosts] = useState([]);
   const lastElement = useRef();
-  const getApiReport=(setRespones , page ) => {
-      return state.createApi.photos
-        .list({
-          page: page,
-        })
-        .then((result) => {
-          setRespones(result);
-        })
-        .catch(() => {
-          console.log("something went wrong!");
-        });
-    }
-  const getPosts=  (posts, data) => {
+    function getApiReport(setRespones , page ) {
+    return state.createApi.photos
+      .list({
+        page: page,
+        perPage: 2,
+      })
+      .then((result) => {
+        setRespones(result);
+      })
+      .catch(() => {
+        console.log("something went wrong!");
+      });
+  }
+
+  function getPosts (posts, data) {
     if(data !== null) {
       let  newArr = [...posts, ...data.response.results]
       return setPosts(newArr)
@@ -57,6 +59,7 @@ const SectionMain = (props) => {
     return (
       <section className={classes.sectionMain}>
         <div className="container">
+          <Sorting/>
           <CardRow
             data={posts}
             page={page}

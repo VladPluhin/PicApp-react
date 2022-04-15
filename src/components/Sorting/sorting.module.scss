@@ -1,3 +1,10 @@
+.sorting {
+    position: relative;
+    max-width: 1200px;
+    width: 100%;
+    padding-bottom: 25px;
+}
+
 .sortingclose {
     background-color: transparent;
     border: none;
@@ -5,8 +12,27 @@
     height: 20px;
     position: relative;
     padding: 0;
-    margin-bottom: 15px;
     cursor: pointer;
+    outline: none;
+    &:hover {
+        span {
+            &:first-child {
+                &:after {
+                    left: 8px;
+                }
+            }
+            &:nth-child(2) {
+                &:after {
+                    left: 20px;
+                }
+            }
+            &:nth-child(3) {
+                &:after {
+                    left: 10px;
+                }
+            }
+        }
+    }
     span {
         position: absolute;
         top: 0;
@@ -16,8 +42,9 @@
         background-color: #fff;
 
         &:after {
+            transition: left .3s ease;
             position: absolute;
-            content: '';
+            content: "";
             width: 6px;
             height: 6px;
             border-radius: 50%;
@@ -38,8 +65,26 @@
             bottom: 0;
             top: auto;
             &:after {
-                left:25px;
+                left: 25px;
             }
         }
     }
+}
+
+.sortingHolder {
+    position: absolute;
+    top: 0;
+    left: 43px;
+    z-index: 3;
+    max-width: 100%;
+    padding: 0 15px;
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.orientation {
+    padding: 0 10px;
 }

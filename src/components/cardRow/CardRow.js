@@ -19,7 +19,7 @@ const CardRow = (props) => {
     );
   } else {
     if (likePostData.length == 0) {
-      return <h1>No posts chosen</h1>;
+      return <h1>No posts chosen...</h1>;
     } else {
       return (
         <div className={classes.cardRow}>

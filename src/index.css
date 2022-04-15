@@ -10,6 +10,8 @@ body {
 
 }
 body::after {
+  position: relative;
+  overflow: hidden;
   content: '';
   z-index: -1;
   position: fixed;
@@ -44,4 +46,70 @@ code {
 .page:hover {
   color: #00fdcd;
   text-shadow: 1px 1px 1px #9c88e6;
+}
+
+
+
+.popup-enter {
+    opacity: 0;
+    transition-delay: 3s, 3s;
+    transform: scale(0.9);
+}
+
+.popup-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+   transition-delay: 3s, 3s;
+  transition: opacity 300ms, transform 300ms;
+}
+
+.popup-exit {
+  opacity: 1;
+}
+
+.popup-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+      transition-delay: 3s, 3s;
+  transition: opacity 300ms, transform 300ms;
+}
+
+.popup-enter-done {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.filter-enter {
+    opacity: 0;
+    transition-delay: 3s, 3s;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.filter-enter-active {
+  opacity: 1;
+  transform: translateX(1);
+  transition-delay: 3s, 3s;
+  transition: opacity 300ms, transform 300ms;
+}
+
+.filter-exit {
+  opacity: 1;
+
+}
+
+.filter-exit-active {
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition-delay: 3s, 3s;
+  transition: opacity 300ms, transform 300ms;
+}
+
+.filter-enter-done {
+    opacity: 1;
+    transform: scaleX(1);
+    transform-origin: left;
+    transition: opacity 300ms, transform 300ms;
 }

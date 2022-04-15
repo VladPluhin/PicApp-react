@@ -1,7 +1,8 @@
-import React, { useContext, useState , useEffect, useRef} from "react";
+import React, { useContext, useState , useRef} from "react";
 import classes from "./card.module.scss";
 import { LikesContext } from "../../context/context";
 import Popup from "../Popup/Popup";
+import { CSSTransition } from 'react-transition-group';
 
 const Card = (props) => {
   const card = props.card;
@@ -19,8 +20,8 @@ const Card = (props) => {
     return  ()=> {hoverOn.current.removeEventLisener("mouseenter", gethoverOn)};
   }
 
- const getLike = (card, arr) => {
-    let selectPhoto =card ;
+  const getLike = (card, arr) => {
+    let selectPhoto = card ;
     let newArr = arr;
     const even = (item) => item.id == selectPhoto.id;
     if (newArr.length === 0) {
@@ -33,6 +34,7 @@ const Card = (props) => {
 
     return newArr;
   };
+
   const deletedPost = (card, arr) => {
     var filtered = arr.filter(function (el) {
       return el.id != card.id;
@@ -66,7 +68,15 @@ const Card = (props) => {
           {card.name ? card.name : card.user.username}
         </span>
       </div>
-      {hovered? <Popup user= {props.card.user}/> : ''}
+      <CSSTransition
+        in={hovered}
+        timeout={300}
+        classNames="popup"
+        unmountOnExit>
+        <Popup user= {props.card.user}
+        />
+      </CSSTransition>
+
     </div>
   );
 };

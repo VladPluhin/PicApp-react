@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./popup.module.scss";
+import  "./popup.module.scss";
 // import PropTypes from 'prop-types';
 
 const Popup = (props) => {

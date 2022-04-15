@@ -1,20 +1,18 @@
-
-import React, { Component } from 'react';
+import React from "react";
 import classes from  './spiner.module.scss';
 
-export default class Spinner  extends Component {
-    render() {
-        return (
-           <div className={classes.spinnerWrapper}>
-                <div className={classes.loadingioSpinner}>
-                    <div className={classes.spiner}>
-                        <div></div>
-                        <div className={classes.round2}></div>
-                        <span>Loading...</span>
-                    </div>
+const Spinner = () => {
+    return (
+        <div className={classes.spinnerWrapper}>
+            <div className={classes.loadingioSpinner}>
+                <div className={classes.spiner}>
+                    <div></div>
+                    <div className={classes.round2}></div>
+                    <span>Loading...</span>
                 </div>
-           </div>
-
-        )
-    }
+            </div>
+        </div>
+    )
 }
+
+export default Spinner;
