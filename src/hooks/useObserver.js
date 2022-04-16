@@ -1,6 +1,6 @@
 import {useEffect, useRef} from "react";
 
-export const useObserver = (ref, data,callback, page) => {
+export const useObserver = (ref, data,callback) => {
     const observer = useRef();
     useEffect(() => {
         if(!data) return;
