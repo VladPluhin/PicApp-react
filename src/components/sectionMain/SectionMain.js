@@ -3,31 +3,29 @@ import classes from "./sectionMain.module.scss";
 import CardRow from "../CardRow/CardRow";
 import Spinner from "../Spiner/Spiner";
 import State from "../../state/state";
-import {useObserver} from "../../hooks/useObserver";
-import Sorting from "../Sorting/Sorting";
+import { useObserver } from "../../hooks/useObserver";
+import Filter from "../Filter/Filter";
 import { LikesContext } from "../../context/context";
-const SectionMain = (props) => {
-  const { data, setRespones, page, setPageRender, getApiReport } = useContext(LikesContext);
+
+const SectionMain = () => {
+  const { data, setRespones, page, setPageRender, getApiReport } =
+    useContext(LikesContext);
   const [posts, setPosts] = useState([]);
   const lastElement = useRef();
 
-  function getPosts (posts, data) {
-    if(data ) {
-      let  newArr = [...posts, ...data.response.results]
-      return setPosts(newArr)
+  function getPosts(posts, data) {
+    if (data) {
+      let newArr = [...posts, ...data.response.results];
+      return setPosts(newArr);
     }
   }
 
-  useObserver(
-    lastElement,
-    data,
-    ()=> {
-      setPageRender(page + 1)
-    },
-  )
+  useObserver(lastElement, data, () => {
+    setPageRender(page + 1);
+  });
 
   useEffect(() => {
-    getApiReport( setRespones, page);
+    getApiReport(setRespones, page);
   }, [page]);
 
   useEffect(() => {
@@ -39,7 +37,7 @@ const SectionMain = (props) => {
       <section className={classes.sectionMain}>
         <div className="container">
           <Spinner />
-          <div ref={lastElement} style={{ height: 5}}></div>
+          <div ref={lastElement} style={{ height: 5 }}></div>
         </div>
       </section>
     );
@@ -47,14 +45,14 @@ const SectionMain = (props) => {
     return (
       <section className={classes.sectionMain}>
         <div className="container">
-          <Sorting/>
+          <Filter />
           <CardRow
             data={posts}
             page={page}
             PageRender={setPageRender}
             likesRow={false}
           />
-          <div ref={lastElement} style={{ height: 5}}></div>
+          <div ref={lastElement} style={{ height: 5 }}></div>
         </div>
       </section>
     );
