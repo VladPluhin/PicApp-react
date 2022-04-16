@@ -32,16 +32,19 @@ const Filter = (props) => {
   }, [newData]);
 
   const getNewPosts = (event) => {
-  event.preventDefault()
+    event.preventDefault()
     if (newData === false ) {
      setNewData(true);
     }
     setNewData(false);
+    console.log(options)
   };
+
   const getOrientirValue=(event)=> {
     event.preventDefault()
     setOrientationValue(event.target.text)
   }
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -70,7 +73,7 @@ const Filter = (props) => {
           <div className={classes.container}>
             <Search
               value={searchQuery}
-              onChangeFunc={() => setTopic()}
+              onChangeFunc={setTopic}
             />
             <Range text={"Chose amount posts:"}
                onChangeFunc={() => setRengeValue()}

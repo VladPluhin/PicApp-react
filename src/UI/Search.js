@@ -6,7 +6,6 @@ const Search = ({onChangeFunc, placeholder}) => {
   return(
     <input type="text"  className={classes.search} placeholder={placeholderValue}
       onChange={event => {
-
       onChangeFunc(event.target.value)}}
     />
   )
