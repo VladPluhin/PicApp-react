@@ -8,15 +8,14 @@ import Sorting from "../Sorting/Sorting";
 
 const SectionMain = (props) => {
   const state = new State();
-  const [data, setRespones] = useState(null);
-  const [page, PageRender] = useState(1);
+  const [data, setRespones] = useState();
+  const [page, setPageRender] = useState(2);
   const [posts, setPosts] = useState([]);
   const lastElement = useRef();
-    function getApiReport(setRespones , page ) {
+  function getApiReport(setRespones , page ) {
     return state.createApi.photos
       .list({
         page: page,
-        perPage: 2,
       })
       .then((result) => {
         setRespones(result);
@@ -27,23 +26,31 @@ const SectionMain = (props) => {
   }
 
   function getPosts (posts, data) {
-    if(data !== null) {
+    if(data ) {
       let  newArr = [...posts, ...data.response.results]
       return setPosts(newArr)
     }
   }
-
+  useObserver(
+    lastElement,
+    data,
+    ()=> {
+      console.log('obs')
+      setPageRender(page + 1)
+    },
+  )
   useEffect(() => {
     getApiReport( setRespones, page);
+     console.log('ger2')
   }, [page]);
 
   useEffect(() => {
+   console.log('post')
     getPosts(posts, data);
+
   }, [data]);
 
-  useObserver(lastElement, data, ()=> {
-    PageRender(page + 1)
-  }, page)
+
 
 
   if (posts.length === 0) {
@@ -63,7 +70,7 @@ const SectionMain = (props) => {
           <CardRow
             data={posts}
             page={page}
-            PageRender={PageRender}
+            PageRender={setPageRender}
             likesRow={false}
           />
           <div ref={lastElement} style={{ height: 5}}></div>

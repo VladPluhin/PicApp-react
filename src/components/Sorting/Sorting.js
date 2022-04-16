@@ -17,7 +17,6 @@ const Sorting = (props) => {
     return showed ? setShowedFilter(false) :  setShowedFilter(true)
   }
 
-
   return(
       <div className={classes.sorting} >
           <button className={classes.sortingclose}
@@ -28,7 +27,7 @@ const Sorting = (props) => {
           </button>
           <CSSTransition
             in={showed}
-            timeout={300}
+            timeout={400}
             classNames="filter"
             unmountOnExit>
             <form className={classes.sortingHolder}>

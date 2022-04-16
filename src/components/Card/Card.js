@@ -31,7 +31,6 @@ const Card = (props) => {
       newArr.push(selectPhoto);
       return newArr;
     }
-
     return newArr;
   };
 
@@ -73,8 +72,7 @@ const Card = (props) => {
         timeout={300}
         classNames="popup"
         unmountOnExit>
-        <Popup user= {props.card.user}
-        />
+          <Popup user= {props.card.user}/>
       </CSSTransition>
 
     </div>
