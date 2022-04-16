@@ -1,24 +1,14 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import classes from "./sectionMain.module.scss";
 import CardRow from "../CardRow/CardRow";
 import Spinner from "../Spiner/Spiner";
-import State from "../../state/state";
 import { useObserver } from "../../hooks/useObserver";
 import Filter from "../Filter/Filter";
 import { LikesContext } from "../../context/context";
 
 const SectionMain = () => {
-  const { data, setRespones, page, setPageRender, getApiReport } =
-    useContext(LikesContext);
-  const [posts, setPosts] = useState([]);
+  const { data, setRespones, page, setPageRender, getApiReport ,getPosts, posts, setPosts } =useContext(LikesContext);
   const lastElement = useRef();
-
-  function getPosts(posts, data) {
-    if (data) {
-      let newArr = [...posts, ...data.response.results];
-      return setPosts(newArr);
-    }
-  }
 
   useObserver(lastElement, data, () => {
     setPageRender(page + 1);

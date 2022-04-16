@@ -23,7 +23,7 @@ const Card = (props) => {
   const getLike = (card, arr) => {
     let selectPhoto = card ;
     let newArr = arr;
-    const even = (item) => item.id == selectPhoto.id;
+    const even = (item) => item.id === selectPhoto.id;
     if (newArr.length === 0) {
       newArr.push(selectPhoto);
       return newArr;
@@ -36,7 +36,7 @@ const Card = (props) => {
 
   const deletedPost = (card, arr) => {
     var filtered = arr.filter(function (el) {
-      return el.id != card.id;
+      return el.id !== card.id;
     });
     return filtered;
   };
@@ -45,7 +45,7 @@ const Card = (props) => {
   return (
     <div className={classes.card}  ref={hoverOff} onMouseLeave={gethoverOff}>
       <div className={classes.cardImg}>
-        <img className="img" src={card.urls.regular} />
+        <img className="img" src={card.urls.regular} alt={card.description? card.description: 'image descriptiom'}/>
       </div>
       <div className={classes.cardBody}>
         {props.likesRow ?

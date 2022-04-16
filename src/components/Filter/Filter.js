@@ -6,15 +6,16 @@ import Search from "../../UI/Search";
 import Range from "../../UI/Range";
 import BtnPrimary from "../../UI/BtnPrimary";
 
-// import PropTypes from 'prop-types';
 
 const Filter = (props) => {
   const [showed, setShowedFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [topic, setTopic]= useState('')
   const [ typeOrientation, setOrientationValue]= useState('')
-  const [ value, setRengeValue]= useState('')
-  const [ color, setColor]= useState('')
+  const [ value, setRengeValue]= useState(10)
+  const [ color, setColor]= useState('black')
+  const [animateButton, setAnimateButton] = useState(false);
+  const [newData, setNewData] = useState(false);
   const [options, setOptions]  = useState({
       query: topic,
       page: 1,
@@ -22,20 +23,25 @@ const Filter = (props) => {
       color: color,
       orientation: typeOrientation,
   })
-
-  const [newData, setNewData] = useState(false);
   const getShowedFilter = () => {
     return showed ? setShowedFilter(false) : setShowedFilter(true);
   };
 
   useEffect(() => {
-    console.log(topic)
-  }, [topic]);
+    setOptions(options)
+  }, [newData]);
 
-  const getNewPosts = (e) => {
-    setNewData(true);
+  const getNewPosts = (event) => {
+  event.preventDefault()
+    if (newData === false ) {
+     setNewData(true);
+    }
+    setNewData(false);
   };
-
+  const getOrientirValue=(event)=> {
+    event.preventDefault()
+    setOrientationValue(event.target.text)
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -43,7 +49,7 @@ const Filter = (props) => {
   return (
     <div className={classes.sorting}>
       <button
-        className={classes.sortingclose}
+        className={animateButton ?' sortingclose active' : 'sortingclose ' }
         onClick={() => {
           getShowedFilter();
         }}
@@ -54,27 +60,32 @@ const Filter = (props) => {
       </button>
       <CSSTransition
         in={showed}
-        timeout={400}
+        timeout={200}
         classNames="filter"
         unmountOnExit
+        onEnter={() => setAnimateButton(true)}
+        onExited={() => setAnimateButton(false)}
       >
         <form className={classes.sortingHolder} onSubmit={handleSubmit}>
           <div className={classes.container}>
             <Search
               value={searchQuery}
-              onChange={(e) => setTopic(e.target.value)}
+              onChangeFunc={() => setTopic()}
             />
-            <Range text={"Chose amount posts:"} />
+            <Range text={"Chose amount posts:"}
+               onChangeFunc={() => setRengeValue()}
+            />
             <div className={classes.orientation}>
-              <BtnPrimary  linkHref={''} value={"landscape"} onClick={(e)=>{
-                console.log(typeOrientation)
-                setOrientationValue(e.target.value)}}/>
-              <BtnPrimary linkHref={''}  value={"portrait"} onClick={(e)=>{ setOrientationValue(e.target.value)}}/>
-              <BtnPrimary linkHref={''}  value={"squarish"} onClick={(e)=>{ setOrientationValue(e.target.value)}}/>
+              <BtnPrimary  linkHref={'#'} value={"landscape"}
+                  onClickFunc={ getOrientirValue}/>
+              <BtnPrimary linkHref={'#'}  value={"portrait"}
+                onClickFunc={ getOrientirValue}/>
+              <BtnPrimary linkHref={'#'}  value={"squarish"}
+               onClickFunc={ getOrientirValue}/>
             </div>
             <div className={classes.colors}>
               <Select
-              onChangeFunc={()}
+                onChangeFunc={()=>{setColor()}}
                 options={[
                     "black_and_white",
                     "black",
@@ -92,7 +103,7 @@ const Filter = (props) => {
             <div className={classes.btnWrapper}>
               <BtnPrimary
                 value={"Find Posts"}
-                onClick={getNewPosts}
+                onClickFunc = {getNewPosts}
                 type="sybmit"
               />
             </div>

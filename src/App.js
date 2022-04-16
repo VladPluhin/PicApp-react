@@ -16,6 +16,7 @@ const App = () => {
   const state = new State();
   const [data, setRespones] = useState();
   const [page, setPageRender] = useState(0);
+  const [posts, setPosts] = useState([]);
 
   function getApiReport(setRespones , page ) {
     return state.createApi.photos
@@ -30,8 +31,15 @@ const App = () => {
       });
   }
 
+  function getPosts(posts, data) {
+    if (data) {
+      let newArr = [...posts, ...data.response.results];
+      return setPosts(newArr);
+    }
+  }
+
   return (
-    <LikesContext.Provider value={{ likePostData, setLikedPost, data, setRespones,page, setPageRender, getApiReport }}>
+    <LikesContext.Provider value={{ likePostData, setLikedPost, data, setRespones,page, setPageRender, getApiReport, getPosts , posts, setPosts}}>
       <Router>
         <Header />
         <Switch>
