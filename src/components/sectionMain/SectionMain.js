@@ -7,27 +7,31 @@ import Filter from "../Filter/Filter";
 import { LikesContext } from "../../context/context";
 
 const SectionMain = () => {
-  const { data, setRespones, page, setPageRender, getApiReport ,getPosts, posts, setPosts } =useContext(LikesContext);
+  const { data, setRespones, page, setPageRender, getApiReport ,getPosts, posts, switcherPost } = useContext(LikesContext);
   const lastElement = useRef();
 
   useObserver(lastElement, data, () => {
+   if (switcherPost === true) {
     setPageRender(page + 1);
+   }
   });
 
   useEffect(() => {
-    getApiReport(setRespones, page);
-  }, [page]);
+     getApiReport(setRespones, page);
+      console.log(switcherPost)
+  }, [page, switcherPost]);
 
   useEffect(() => {
-    getPosts(posts, data);
-  }, [data]);
+    getPosts(posts, data)
+     console.log(switcherPost)
+  }, [data, switcherPost]);
 
   if (posts.length === 0) {
     return (
       <section className={classes.sectionMain}>
         <div className="container">
           <Spinner />
-          <div ref={lastElement} style={{ height: 5 }}></div>
+          <div ref={lastElement} style={{ height: 1 }}></div>
         </div>
       </section>
     );
@@ -35,14 +39,14 @@ const SectionMain = () => {
     return (
       <section className={classes.sectionMain}>
         <div className="container">
-          <Filter />
+          <Filter getSorting={setRespones}/>
           <CardRow
             data={posts}
             page={page}
             PageRender={setPageRender}
             likesRow={false}
           />
-          <div ref={lastElement} style={{ height: 5 }}></div>
+          <div ref={lastElement} style={{ height: 1 }}></div>
         </div>
       </section>
     );

@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import classes from "./filter.module.scss";
 import { CSSTransition } from "react-transition-group";
 import Select from "../../UI/Select";
 import Search from "../../UI/Search";
 import Range from "../../UI/Range";
 import BtnPrimary from "../../UI/BtnPrimary";
-
+import { LikesContext } from "../../context/context";
 
 const Filter = (props) => {
+  const { state, switcherPost, setSwitcher, getResetFilter } =useContext(LikesContext);
   const [showed, setShowedFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [topic, setTopic]= useState('')
@@ -15,38 +16,28 @@ const Filter = (props) => {
   const [value, setRengeValue]= useState(10)
   const [color, setColor]= useState('black')
   const [animateButton, setAnimateButton] = useState(false);
-  const [newData, setNewData] = useState(false);
-  const [options, setOptions]  = useState({
-      query: topic,
-      page: 1,
-      perPage: value,
-      color: color,
-      orientation: typeOrientation,
-  })
+  function NewOptions (oldquery, oldperPage, oldcolor, oldtypeOrientation) {
+    this.query = oldquery;
+    this.perPage = oldperPage;
+    this.color = oldcolor;
+    if(oldtypeOrientation.length > 0) {
+      this.orientation = oldtypeOrientation
+    }
+  }
+
   const getShowedFilter = () => {
       return showed ? setShowedFilter(false) : setShowedFilter(true);
   };
 
-function NewOptions (oldquery, oldperPage, oldcolor, oldtypeOrientation) {
-  this.query = oldquery;
-  this.page = 1;
-  this.perPage = oldperPage;
-  this.color = oldcolor;
-  this.orientation = oldtypeOrientation;
-}
-  useEffect(() => {
-  }, [newData]);
-
-  const getNewOptions = (event) => {
+  const getNewPosts = (event) => {
     event.preventDefault()
-    const newobj  = new NewOptions(topic, value, color, typeOrientation)
-    console.log(newobj)
-    return (setOptions(newobj))
-  }
-  const getNewPosts = () => {
-    return state.createApi.punsplash.search.getPhotos({...options})
+
+    setSwitcher(false)
+    console.log(switcherPost)
+    const newobj  = {...new NewOptions(topic, value, color, typeOrientation)}
+    return state.createApi.search.getPhotos(newobj)
       .then((result) => {
-        setRespones(result);
+       props.getSorting(result);
       })
       .catch(() => {
         console.log("something went wrong!");
@@ -57,10 +48,6 @@ function NewOptions (oldquery, oldperPage, oldcolor, oldtypeOrientation) {
     event.preventDefault()
     setOrientationValue(event.target.text)
   }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
 
   return (
     <div className={classes.sorting}>
@@ -78,45 +65,52 @@ function NewOptions (oldquery, oldperPage, oldcolor, oldtypeOrientation) {
         unmountOnExit
         onEnter={() => setAnimateButton(true)}
         onExited={() => setAnimateButton(false)}>
-          <form className={classes.sortingHolder} onSubmit={handleSubmit}>
-            <div className={classes.container}>
-              <Search
-                value={searchQuery}
-                onChangeFunc={setTopic}/>
-              <Range text={"Chose amount posts:"}
-                onChangeFunc={setRengeValue}/>
-              <div className={classes.orientation}>
-                <BtnPrimary  linkHref={'#'} value={"landscape"}
-                  onClickFunc={ getOrientirValue}/>
-                <BtnPrimary linkHref={'#'}  value={"portrait"}
-                  onClickFunc={ getOrientirValue}/>
-                <BtnPrimary linkHref={'#'}  value={"squarish"}
-                  onClickFunc={ getOrientirValue}/>
-              </div>
-              <div className={classes.colors}>
-                <Select
-                  onChangeFunc={setColor}
-                  options={[
-                      "black_and_white",
-                      "black",
-                      "white",
-                      "yellow",
-                      "orange",
-                      "red",
-                      "purple",
-                      "magenta",
-                      "green",
-                      "teal",
-                      "blue",]}/>
-              </div>
-              <div className={classes.btnWrapper}>
-                <BtnPrimary
-                  value={"Find Posts"}
-                  onClickFunc = {getNewOptions}
-                  type="sybmit"/>
-              </div>
+        <form className={classes.sortingHolder} onSubmit={(e)=>e.preventDefault()}>
+          <div className={classes.container}>
+            <Search
+              value={searchQuery}
+              onChangeFunc={setTopic}/>
+            <Range text={"Chose amount posts:"}
+              onChangeFunc={setRengeValue}/>
+            <div className={classes.orientation}>
+              <BtnPrimary  linkHref={'#'} value={"landscape"}
+                onClickFunc={ getOrientirValue}/>
+              <BtnPrimary linkHref={'#'}  value={"portrait"}
+                onClickFunc={ getOrientirValue}/>
+              <BtnPrimary linkHref={'#'}  value={"squarish"}
+                onClickFunc={ getOrientirValue}/>
             </div>
-          </form>
+            <div className={classes.colors}>
+              <Select
+                onChangeFunc={setColor}
+                options={[
+                    "black_and_white",
+                    "black",
+                    "white",
+                    "yellow",
+                    "orange",
+                    "red",
+                    "purple",
+                    "magenta",
+                    "green",
+                    "teal",
+                    "blue",]}/>
+            </div>
+            <div className={classes.btnWrapper}>
+              <BtnPrimary
+                value={"Find Posts"}
+                onClickFunc = {getNewPosts}
+                type="sybmit"/>
+              <BtnPrimary
+              value={"Reset filter"}
+              onClickFunc = {(event)=>{
+                event.preventDefault()
+                return  setSwitcher(true)
+              }}
+              type="sybmit"/>
+            </div>
+          </div>
+        </form>
       </CSSTransition>
     </div>
   );

@@ -17,6 +17,7 @@ const App = () => {
   const [data, setRespones] = useState();
   const [page, setPageRender] = useState(0);
   const [posts, setPosts] = useState([]);
+  const [switcherPost, setSwitcher] = useState(true);
 
   function getApiReport(setRespones , page ) {
     return state.createApi.photos
@@ -31,15 +32,28 @@ const App = () => {
       });
   }
 
+  const getResetFilter = (event)=> {
+    event.preventDefault()
+    setSwitcher(true)
+  }
+
   function getPosts(posts, data) {
-    if (data) {
+
+    if (data && switcherPost ===true) {
+
       let newArr = [...posts, ...data.response.results];
+      return setPosts(newArr);
+    }
+    else if(data && !switcherPost) {
+      let newArr = [];
+      newArr = [...data.response.results];
+      console.log(newArr)
       return setPosts(newArr);
     }
   }
 
   return (
-    <LikesContext.Provider value={{ likePostData, setLikedPost, data, setRespones,page, setPageRender, getApiReport, getPosts , posts, setPosts}}>
+    <LikesContext.Provider value={{ state, likePostData, setLikedPost, data, setRespones,page, setPageRender, getApiReport, getPosts , posts, setPosts, switcherPost, setSwitcher, getResetFilter}}>
       <Router>
         <Header />
         <Switch>
