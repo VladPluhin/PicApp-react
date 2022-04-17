@@ -11,9 +11,9 @@ const Filter = (props) => {
   const [showed, setShowedFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [topic, setTopic]= useState('')
-  const [ typeOrientation, setOrientationValue]= useState('')
-  const [ value, setRengeValue]= useState(10)
-  const [ color, setColor]= useState('black')
+  const [typeOrientation, setOrientationValue]= useState('')
+  const [value, setRengeValue]= useState(10)
+  const [color, setColor]= useState('black')
   const [animateButton, setAnimateButton] = useState(false);
   const [newData, setNewData] = useState(false);
   const [options, setOptions]  = useState({
@@ -24,21 +24,34 @@ const Filter = (props) => {
       orientation: typeOrientation,
   })
   const getShowedFilter = () => {
-    return showed ? setShowedFilter(false) : setShowedFilter(true);
+      return showed ? setShowedFilter(false) : setShowedFilter(true);
   };
 
+function NewOptions (oldquery, oldperPage, oldcolor, oldtypeOrientation) {
+  this.query = oldquery;
+  this.page = 1;
+  this.perPage = oldperPage;
+  this.color = oldcolor;
+  this.orientation = oldtypeOrientation;
+}
   useEffect(() => {
-    setOptions(options)
   }, [newData]);
 
-  const getNewPosts = (event) => {
+  const getNewOptions = (event) => {
     event.preventDefault()
-    if (newData === false ) {
-     setNewData(true);
-    }
-    setNewData(false);
-    console.log(options)
-  };
+    const newobj  = new NewOptions(topic, value, color, typeOrientation)
+    console.log(newobj)
+    return (setOptions(newobj))
+  }
+  const getNewPosts = () => {
+    return state.createApi.punsplash.search.getPhotos({...options})
+      .then((result) => {
+        setRespones(result);
+      })
+      .catch(() => {
+        console.log("something went wrong!");
+      });
+  }
 
   const getOrientirValue=(event)=> {
     event.preventDefault()
@@ -53,10 +66,7 @@ const Filter = (props) => {
     <div className={classes.sorting}>
       <button
         className={animateButton ?' sortingclose active' : 'sortingclose ' }
-        onClick={() => {
-          getShowedFilter();
-        }}
-      >
+        onClick={() => {getShowedFilter()}}>
         <span></span>
         <span></span>
         <span></span>
@@ -67,51 +77,46 @@ const Filter = (props) => {
         classNames="filter"
         unmountOnExit
         onEnter={() => setAnimateButton(true)}
-        onExited={() => setAnimateButton(false)}
-      >
-        <form className={classes.sortingHolder} onSubmit={handleSubmit}>
-          <div className={classes.container}>
-            <Search
-              value={searchQuery}
-              onChangeFunc={setTopic}
-            />
-            <Range text={"Chose amount posts:"}
-               onChangeFunc={() => setRengeValue()}
-            />
-            <div className={classes.orientation}>
-              <BtnPrimary  linkHref={'#'} value={"landscape"}
+        onExited={() => setAnimateButton(false)}>
+          <form className={classes.sortingHolder} onSubmit={handleSubmit}>
+            <div className={classes.container}>
+              <Search
+                value={searchQuery}
+                onChangeFunc={setTopic}/>
+              <Range text={"Chose amount posts:"}
+                onChangeFunc={setRengeValue}/>
+              <div className={classes.orientation}>
+                <BtnPrimary  linkHref={'#'} value={"landscape"}
                   onClickFunc={ getOrientirValue}/>
-              <BtnPrimary linkHref={'#'}  value={"portrait"}
-                onClickFunc={ getOrientirValue}/>
-              <BtnPrimary linkHref={'#'}  value={"squarish"}
-               onClickFunc={ getOrientirValue}/>
+                <BtnPrimary linkHref={'#'}  value={"portrait"}
+                  onClickFunc={ getOrientirValue}/>
+                <BtnPrimary linkHref={'#'}  value={"squarish"}
+                  onClickFunc={ getOrientirValue}/>
+              </div>
+              <div className={classes.colors}>
+                <Select
+                  onChangeFunc={setColor}
+                  options={[
+                      "black_and_white",
+                      "black",
+                      "white",
+                      "yellow",
+                      "orange",
+                      "red",
+                      "purple",
+                      "magenta",
+                      "green",
+                      "teal",
+                      "blue",]}/>
+              </div>
+              <div className={classes.btnWrapper}>
+                <BtnPrimary
+                  value={"Find Posts"}
+                  onClickFunc = {getNewOptions}
+                  type="sybmit"/>
+              </div>
             </div>
-            <div className={classes.colors}>
-              <Select
-                onChangeFunc={()=>{setColor()}}
-                options={[
-                    "black_and_white",
-                    "black",
-                    "white",
-                    "yellow",
-                    "orange",
-                    "red",
-                    "purple",
-                    "magenta",
-                    "green",
-                    "teal",
-                    "blue",
-                  ]}/>
-            </div>
-            <div className={classes.btnWrapper}>
-              <BtnPrimary
-                value={"Find Posts"}
-                onClickFunc = {getNewPosts}
-                type="sybmit"
-              />
-            </div>
-          </div>
-        </form>
+          </form>
       </CSSTransition>
     </div>
   );

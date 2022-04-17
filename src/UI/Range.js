@@ -5,10 +5,11 @@ const Range = ({text, onChangeFunc}) => {
   const textValue = text ? text : 'Chose amount posts:';
 
   const [rangeValue, setRangeValue] = useState(1)
-   const handleChange=(event)=> {
+  const handleChange = (event) => {
     setRangeValue(event.target.value)
-    onChangeFunc(event.target.value)
+    return  onChangeFunc(event.target.value)
   }
+
   return(
     <div className={classes.rangeInput}>
       <input
