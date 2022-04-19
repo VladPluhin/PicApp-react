@@ -7,7 +7,7 @@ const Logo = () => {
   const { setSwitcher } = useContext(LikesContext);
   return (
     <div className={classes.logo}>
-      <Link to="/" onClick={()=>setSwitcher(true)}>PictureApp</Link>
+      <Link to="/" >PictureApp</Link>
     </div>
   );
 };

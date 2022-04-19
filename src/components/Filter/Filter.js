@@ -8,7 +8,7 @@ import BtnPrimary from "../../UI/BtnPrimary";
 import { LikesContext } from "../../context/context";
 
 const Filter = (props) => {
-  const { state, switcherPost, setSwitcher, getResetFilter } =useContext(LikesContext);
+  const { state, switcherPost, setSwitcher, getResetFilter , data,   setNotFiltered, getSortedCardData} =useContext(LikesContext);
   const [showed, setShowedFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [topic, setTopic]= useState('')
@@ -99,7 +99,10 @@ const Filter = (props) => {
             <div className={classes.btnWrapper}>
               <BtnPrimary
                 value={"Find Posts"}
-                onClickFunc = {getNewPosts}
+                onClickFunc = {(event)=> {
+                event.preventDefault()
+                getSortedCardData( data,   setNotFiltered)
+                }}
                 type="sybmit"/>
               <BtnPrimary
               value={"Reset filter"}

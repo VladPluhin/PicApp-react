@@ -24,6 +24,7 @@ const App = () => {
   const [color, setColor]= useState('black')
   const [resetFilter, setResetFilter] = useState(false)
   const [sortedPost, setSortedPosts]  = useState([]);
+  const [notFiltered, setNotFiltered] = useState(true)
   function NewOptions (oldquery, oldperPage, oldcolor, oldtypeOrientation) {
     this.query = oldquery;
     this.perPage = oldperPage;
@@ -55,15 +56,18 @@ const App = () => {
       const newobj  = {...new NewOptions(topic, value, color, typeOrientation)}
       return state.createApi.search.getPhotos(newobj)
       .then((result) => {
+      console.log(12313313)
         return setAllSortPosts(result);
       })
       .catch(() => {
         console.log("something went wrong!");
       });
    }
-  function getSortedCardData( data) {
+  function getSortedCardData( data,   setNotFiltered) {
      if (data)  {
       let newArr = [...data.response.results]
+      setNotFiltered(false)
+      console.log(newArr)
       return setSortedPosts(newArr);
     }
   }
@@ -71,7 +75,7 @@ const App = () => {
 
 
   return (
-    <LikesContext.Provider value={{state, getData, resetFilter, likePostData, setLikedPost, data, setRespones, page, setPageRender   ,topic, setTopic, typeOrientation, setOrientationValue,value, setRengeValue, color, setColor, NewOptions, nonefiltered, setFilter, getSortedPostData, posts, getPosts}}>
+    <LikesContext.Provider value={{state, getData, resetFilter, likePostData, setLikedPost, data, setRespones, page, setPageRender   ,topic, setTopic, typeOrientation, setOrientationValue,value, setRengeValue, color, setColor, NewOptions, nonefiltered, setFilter, getSortedPostData, posts, getPosts, notFiltered, setNotFiltered, getSortedCardData, sortedPost}}>
       <Router>
         <Header />
         <Switch>

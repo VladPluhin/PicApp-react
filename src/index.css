@@ -96,7 +96,7 @@ code {
 .filter-exit-active {
   opacity: 0;
   transform: scaleX(0);
-  transform-origin: left;
+  transform-origin: right;
   transition-delay: 3s, 3s;
   transition: opacity 300ms, transform 300ms;
 }
@@ -104,7 +104,7 @@ code {
 .filter-enter-done {
     opacity: 1;
     transform: scaleX(1);
-    transform-origin: left;
+    transform-origin: right;
     transition: opacity 300ms, transform 300ms;
 }
 
