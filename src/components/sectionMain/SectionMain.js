@@ -7,24 +7,22 @@ import Filter from "../Filter/Filter";
 import { LikesContext } from "../../context/context";
 
 const SectionMain = () => {
-  const { data, setRespones, page, setPageRender, getApiReport ,getPosts, posts, switcherPost } = useContext(LikesContext);
+  const { data, setRespones, page, setPageRender, getApiReport ,getPosts, posts,  } = useContext(LikesContext);
   const lastElement = useRef();
 
   useObserver(lastElement, data, () => {
-   if (switcherPost === true) {
+
     setPageRender(page + 1);
-   }
   });
 
   useEffect(() => {
      getApiReport(setRespones, page);
-      console.log(switcherPost)
-  }, [page, switcherPost]);
+
+  }, [page]);
 
   useEffect(() => {
     getPosts(posts, data)
-     console.log(switcherPost)
-  }, [data, switcherPost]);
+  }, [data]);
 
   if (posts.length === 0) {
     return (
