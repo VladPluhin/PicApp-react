@@ -1,13 +1,15 @@
 import React, {useState} from "react";
 import classes from "./ui.module.scss";
 
-const Range = (props) => {
-  const text = props.text? props.text : 'Chose amount posts:';
+const Range = ({text, onChangeFunc}) => {
+  const textValue = text ? text : 'Chose amount posts:';
 
   const [rangeValue, setRangeValue] = useState(1)
-   const handleChange=(event)=> {
+  const handleChange = (event) => {
     setRangeValue(event.target.value)
+    return  onChangeFunc(event.target.value)
   }
+
   return(
     <div className={classes.rangeInput}>
       <input
@@ -16,8 +18,8 @@ const Range = (props) => {
         value={rangeValue}
         onChange={handleChange}
         step="1"/>
-        <span className={classes.rangeText}>{text}</span>
-        <span>{rangeValue}</span>
+        <span className={classes.rangeText}>{textValue}   <span>{rangeValue}</span></span>
+
     </div>
   )
 }

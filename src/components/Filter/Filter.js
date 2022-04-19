@@ -1,80 +1,88 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import classes from "./filter.module.scss";
 import { CSSTransition } from "react-transition-group";
 import Select from "../../UI/Select";
 import Search from "../../UI/Search";
 import Range from "../../UI/Range";
 import BtnPrimary from "../../UI/BtnPrimary";
-
-// import PropTypes from 'prop-types';
+import { LikesContext } from "../../context/context";
 
 const Filter = (props) => {
+  const { state, switcherPost, setSwitcher, getResetFilter , data,   setNotFiltered, getSortedCardData, getSortedPostData} =useContext(LikesContext);
   const [showed, setShowedFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [topic, setTopic]= useState('')
-  const [ typeOrientation, setOrientationValue]= useState('')
-  const [ value, setRengeValue]= useState('')
-  const [ color, setColor]= useState('')
-  const [options, setOptions]  = useState({
-      query: topic,
-      page: 1,
-      perPage: value,
-      color: color,
-      orientation: typeOrientation,
-  })
+  const [typeOrientation, setOrientationValue]= useState('')
+  const [value, setRengeValue]= useState(10)
+  const [color, setColor]= useState('black')
+  const [animateButton, setAnimateButton] = useState(false);
+  function NewOptions (oldquery, oldperPage, oldcolor, oldtypeOrientation) {
+    this.query = oldquery;
+    this.perPage = oldperPage;
+    this.color = oldcolor;
+    if(oldtypeOrientation.length > 0) {
+      this.orientation = oldtypeOrientation
+    }
+  }
 
-  const [newData, setNewData] = useState(false);
   const getShowedFilter = () => {
-    return showed ? setShowedFilter(false) : setShowedFilter(true);
+      return showed ? setShowedFilter(false) : setShowedFilter(true);
   };
 
-  useEffect(() => {
-    console.log(topic)
-  }, [topic]);
+  const getNewPosts = (event) => {
+    event.preventDefault()
 
-  const getNewPosts = (e) => {
-    setNewData(true);
-  };
+    setSwitcher(false)
+    console.log(switcherPost)
+    const newobj  = {...new NewOptions(topic, value, color, typeOrientation)}
+    return state.createApi.search.getPhotos(newobj)
+      .then((result) => {
+       props.getSorting(result);
+      })
+      .catch(() => {
+        console.log("something went wrong!");
+      });
+  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  const getOrientirValue=(event)=> {
+    event.preventDefault()
+    setOrientationValue(event.target.text)
+  }
 
   return (
     <div className={classes.sorting}>
       <button
-        className={classes.sortingclose}
-        onClick={() => {
-          getShowedFilter();
-        }}
-      >
+        className={animateButton ?' sortingclose active' : 'sortingclose ' }
+        onClick={() => {getShowedFilter()}}>
         <span></span>
         <span></span>
         <span></span>
       </button>
       <CSSTransition
         in={showed}
-        timeout={400}
+        timeout={200}
         classNames="filter"
         unmountOnExit
-      >
-        <form className={classes.sortingHolder} onSubmit={handleSubmit}>
+        onEnter={() => setAnimateButton(true)}
+        onExited={() => setAnimateButton(false)}>
+        <form className={classes.sortingHolder} onSubmit={(e)=>e.preventDefault()}>
           <div className={classes.container}>
             <Search
               value={searchQuery}
-              onChange={(e) => setTopic(e.target.value)}
-            />
-            <Range text={"Chose amount posts:"} />
+              onChangeFunc={setTopic}/>
+            <Range text={"Chose amount posts:"}
+              onChangeFunc={setRengeValue}/>
             <div className={classes.orientation}>
-              <BtnPrimary  linkHref={''} value={"landscape"} onClick={(e)=>{
-                console.log(typeOrientation)
-                setOrientationValue(e.target.value)}}/>
-              <BtnPrimary linkHref={''}  value={"portrait"} onClick={(e)=>{ setOrientationValue(e.target.value)}}/>
-              <BtnPrimary linkHref={''}  value={"squarish"} onClick={(e)=>{ setOrientationValue(e.target.value)}}/>
+              <BtnPrimary  linkHref={'#'} value={"landscape"}
+                onClickFunc={ getOrientirValue}/>
+              <BtnPrimary linkHref={'#'}  value={"portrait"}
+                onClickFunc={ getOrientirValue}/>
+              <BtnPrimary linkHref={'#'}  value={"squarish"}
+                onClickFunc={ getOrientirValue}/>
             </div>
             <div className={classes.colors}>
               <Select
-              onChangeFunc={()}
+                onChangeFunc={setColor}
                 options={[
                     "black_and_white",
                     "black",
@@ -86,15 +94,23 @@ const Filter = (props) => {
                     "magenta",
                     "green",
                     "teal",
-                    "blue",
-                  ]}/>
+                    "blue",]}/>
             </div>
             <div className={classes.btnWrapper}>
               <BtnPrimary
                 value={"Find Posts"}
-                onClick={getNewPosts}
-                type="sybmit"
-              />
+                onClickFunc = {(event)=> {
+                event.preventDefault()
+                getSortedPostData( data,   setNotFiltered)
+                }}
+                type="sybmit"/>
+              <BtnPrimary
+              value={"Reset filter"}
+              onClickFunc = {(event)=>{
+                event.preventDefault()
+                return  setSwitcher(true)
+              }}
+              type="sybmit"/>
             </div>
           </div>
         </form>
