@@ -7,24 +7,23 @@ import Filter from "../Filter/Filter";
 import { LikesContext } from "../../context/context";
 
 const SectionMain = () => {
-  const { data, setRespones, page, setPageRender, getApiReport ,getPosts, posts,  } = useContext(LikesContext);
+ const { data, getPostData, setAllPosts,getDataForCards,getSortedPostData, setRespones, page, setPageRender, getApiData ,getCardData ,getSortedCardData , allposts, resetFilter , nonefiltered} = useContext(LikesContext);
   const lastElement = useRef();
 
   useObserver(lastElement, data, () => {
-
     setPageRender(page + 1);
   });
 
   useEffect(() => {
-     getApiReport(setRespones, page);
-
+    getPostData();
   }, [page]);
 
-  useEffect(() => {
-    getPosts(posts, data)
-  }, [data]);
+  // useEffect(() => {
+  //   getCardData(allposts, data);
+  // }, [data]);
 
-  if (posts.length === 0) {
+
+  if (allposts.length === 0) {
     return (
       <section className={classes.sectionMain}>
         <div className="container">
@@ -33,13 +32,13 @@ const SectionMain = () => {
         </div>
       </section>
     );
-  } else if (posts.length !== 0) {
+  } else if (allposts.length !== 0) {
     return (
       <section className={classes.sectionMain}>
         <div className="container">
           <Filter getSorting={setRespones}/>
           <CardRow
-            data={posts}
+            data={allposts}
             page={page}
             PageRender={setPageRender}
             likesRow={false}
