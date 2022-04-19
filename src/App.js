@@ -63,12 +63,12 @@ const App = () => {
         console.log("something went wrong!");
       });
    }
-  function getSortedCardData( data,   setNotFiltered) {
+  function getSortedCardData( data, setNotFiltered) {
      if (data)  {
       let newArr = [...data.response.results]
       setNotFiltered(false)
       console.log(newArr)
-      return setSortedPosts(newArr);
+      return setPosts(newArr);
     }
   }
 
