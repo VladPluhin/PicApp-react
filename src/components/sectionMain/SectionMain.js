@@ -7,7 +7,7 @@ import Filter from "../Filter/Filter";
 import { LikesContext } from "../../context/context";
 
 const SectionMain = () => {
-  const { data, setRespones, page, setPageRender, getApiReport ,getPosts, posts,  } = useContext(LikesContext);
+  const { data, setRespones, page, setPageRender, getData ,getPosts, posts  } = useContext(LikesContext);
   const lastElement = useRef();
 
   useObserver(lastElement, data, () => {
@@ -16,7 +16,7 @@ const SectionMain = () => {
   });
 
   useEffect(() => {
-     getApiReport(setRespones, page);
+     getData(setRespones, page);
 
   }, [page]);
 
