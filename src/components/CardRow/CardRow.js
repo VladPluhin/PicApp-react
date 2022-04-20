@@ -5,7 +5,6 @@ import { LikesContext } from "../../context/context";
 
 const CardRow = (props) => {
   const { likePostData } = useContext(LikesContext);
-  console.log(props)
   if (props.likesRow === false) {
     return (
       <div className={classes.cardRow}>

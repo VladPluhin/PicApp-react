@@ -7,33 +7,42 @@ import { useObserver } from "../../hooks/useObserver";
 import { LikesContext } from "../../context/context";
 
 const SectionMain = () => {
-  const { data, setRespones, page, setPageRender, getData ,getPosts, posts ,noneFiltered , sortedPost, getSortedPostData, setSortedPosts, sortedPosts} = useContext(LikesContext);
+  const { data, setRespones, page, setPageRender, getData ,getPosts, posts ,noneFiltered , sortedPost, getSortedPostData, setSortedData, getSotedPosts, resuls, returned, sortedData} = useContext(LikesContext);
   const lastElement = useRef();
 
   useObserver(lastElement, data, () => {
-    setPageRender(page + 1);
+  if(noneFiltered===false) {
+   setPageRender(page + 1);
+  }
+
   });
 
   useEffect(() => {
      getData(setRespones, page);
-  }, [page]);
+  }, [page, ]);
 
   useEffect(() => {
-    getPosts(posts, data,sortedPost, noneFiltered)
+    getPosts(posts, data)
   }, [data]);
 
   useEffect(() => {
-      getSortedPostData(setSortedPosts);
+    returned(noneFiltered,posts,sortedPost)
+  }, [posts]);
+
+
+  useEffect(() => {
+     getSortedPostData(setSortedData);
   }, [noneFiltered]);
 
   useEffect(() => {
-      getPosts(posts, data, sortedPost, noneFiltered);
+    getSotedPosts(sortedData)
+  }, [sortedData]);
 
-  }, [noneFiltered]);
+  useEffect(() => {
+    returned(noneFiltered, posts, sortedPost)
+  }, [sortedPost]);
 
-
-
-  if (posts.length === 0) {
+  if (resuls.length === 0) {
     return (
       <section className={classes.sectionMain}>
         <div className="container">
@@ -47,7 +56,7 @@ const SectionMain = () => {
       <section className={classes.sectionMain}>
         <div className="container">
           <CardRow
-            data={noneFiltered ? posts : sortedPosts}
+            data={resuls}
             likesRow={false}
           />
           <div ref={lastElement} style={{ height: 1 }}></div>

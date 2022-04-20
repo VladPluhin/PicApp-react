@@ -8,7 +8,7 @@ import BtnPrimary from "../../UI/BtnPrimary";
 import { LikesContext } from "../../context/context";
 
 const Filter = (props) => {
-  const { state, switcherPost, setSwitcher,setFilter, getResetFilter , data,   setNotFiltered, getSortedCardData, getSortedPostData, topic, setTopic, value, setRengeValue, color, setColor, typeOrientation, setOrientationValue, getPosts, posts} = useContext(LikesContext);
+  const { setFiltered, switcherPost, setSwitcher,setFilter, getResetFilter , data,   setNotFiltered, getSortedCardData, getSortedPostData, topic, setTopic, value, setRengeValue, color, setColor, typeOrientation, setOrientationValue, getPosts, posts} = useContext(LikesContext);
   const [showed, setShowedFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [animateButton, setAnimateButton] = useState(false);
@@ -82,7 +82,7 @@ const Filter = (props) => {
                 type="sybmit"/>
               <BtnPrimary
                 value={"Reset filter"}
-                  onClickFunc = {getallPosts}
+                onClickFunc = {getallPosts}
                 type="sybmit"/>
             </div>
           </div>
