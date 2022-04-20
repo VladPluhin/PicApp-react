@@ -12,6 +12,7 @@ const Filter = (props) => {
   const [showed, setShowedFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [animateButton, setAnimateButton] = useState(false);
+
   const getShowedFilter = () => {
       return showed ? setShowedFilter(false) : setShowedFilter(true);
   };

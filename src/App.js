@@ -14,15 +14,15 @@ import State from "./state/state";
 const App = () => {
   const [likePostData, setLikedPost] = useState([]);
   const state = new State();
-  const [data, setRespones] = useState(); //С‚Рѕ С‡С‚Рѕ РїРѕР»СѓС‡Р°РµРј РѕС‚ СЃРµСЂРІРµСЂР°
+  const [data, setRespones] = useState(); //то что получаем от сервера
   const [page, setPageRender] = useState(0);
-  const [posts, setPosts] = useState([]); // РјР°СЃСЃРёРІ РіРѕС‚РѕРІС‹С… РїРѕСЃС‚РѕРІ
+  const [posts, setPosts] = useState([]); // массив готовых постов
   const [noneFiltered, setFilter] = useState(true);
   const [topic, setTopic]= useState('')
   const [typeOrientation, setOrientationValue]= useState('')
   const [value, setRengeValue]= useState(10)
   const [color, setColor]= useState('black')
-  const [sortedPost, setSortedPosts]  = useState([]);//С‚Рѕ С‡С‚Рѕ РїРѕР»СѓС‡Р°РµРј СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Рµ
+  const [sortedPost, setSortedPosts]  = useState([]);//то что получаем сортированные
   function NewOptions (oldquery, oldperPage, oldcolor, oldtypeOrientation) {
     this.query = oldquery;
     this.perPage = oldperPage;
