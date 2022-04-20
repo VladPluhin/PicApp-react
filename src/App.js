@@ -18,7 +18,7 @@ const App = () => {
   const [sortedPost, setSortedPosts]  = useState([]);
   const [data, setRespones] = useState();
   const [sortedData, setSortedData]  = useState([]);
-  const [resuls, setResults] = useState([]);
+  const [results, setResults] = useState([]);
   const [page, setPageRender] = useState(0);
   const [noneFiltered, setFilter] = useState(true);
   const [topic, setTopic]= useState('')
@@ -40,47 +40,54 @@ const App = () => {
         page: page,
       })
       .then((result) => {
+      console.log(result)
         setRespones(result);
       })
       .catch(() => {
         console.log("something went wrong!");
       });
   }
-  function getSortedPostData(setSortedData) {
-    const newobj  = {...new NewOptions(topic, value, color, typeOrientation)}
-    return state.createApi.search.getPhotos(newobj)
-      .then((result) => {
-        console.log(result)
-        return setSortedData(result);
-      })
-      .catch(() => {
-        console.log("something went wrong!");
-      });
-  }
   function getPosts(posts, data) {
-    let newArr=[]
+    let newArr = []
     if (data) {
         newArr = [...posts, ...data.response.results];
         return setPosts(newArr);
       }
   }
 
-  function getSotedPosts(data) {
-    if ( data) {
-      return setSortedPosts([...data.response.results]);
-    }
-  }
-   function returned(noneFiltered,posts,sortedPost) {
-      if (noneFiltered===true) {
-       setResults(posts)
+  // function getSortedPostData(setSortedData) {
+  //   const newobj  = {...new NewOptions(topic, value, color, typeOrientation)}
+  //    if(noneFiltered===false) {
+  //       return state.createApi.search.getPhotos(newobj)
+  //     .then((result) => {
+  //        setSortedData(result);
+  //        console.log(result)
+  //     })
+  //     .catch(() => {
+  //       console.log("something went wrong!!");
+  //     });
+  //  }
 
-      }else{
-          setResults(sortedPost)
-      }
-   }
+  // }
+
+
+
+  // function getSortedPosts(data) {
+  //   if ( data) {
+  //     return setSortedPosts([...data.response.results]);
+  //   }
+  // }
+
+  // function getFilteredPostData(noneFiltered, posts, sortedPost) {
+  //     if (noneFiltered==true) {
+  //      return setResults(posts)
+  //     }else{
+  //       return  setResults(sortedPost)
+  //     }
+  //  }
 
   return (
-    <LikesContext.Provider value={{state, getData, likePostData, setLikedPost, data, setRespones, page, setPageRender   ,topic, setTopic, typeOrientation, setOrientationValue,value, setRengeValue, color, setColor, NewOptions, setFilter, getSortedPostData, posts, getPosts, noneFiltered, setFilter, sortedPost, resuls, setResults, returned, getSotedPosts}}>
+    <LikesContext.Provider value={{state, getData, likePostData, setLikedPost, data, setRespones, page, setPageRender   ,topic, setTopic, typeOrientation, setOrientationValue,value, setRengeValue, color, setColor, NewOptions, setFilter, posts, getPosts, noneFiltered, setFilter, sortedPost, results, setResults,}}>
       <Router>
         <Header />
         <Switch>

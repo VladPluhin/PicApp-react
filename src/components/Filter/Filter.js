@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import classes from "./filter.module.scss";
 import { CSSTransition } from "react-transition-group";
 import Select from "../../UI/Select";
@@ -8,7 +8,7 @@ import BtnPrimary from "../../UI/BtnPrimary";
 import { LikesContext } from "../../context/context";
 
 const Filter = (props) => {
-  const { setFiltered, switcherPost, setSwitcher,setFilter, getResetFilter , data,   setNotFiltered, getSortedCardData, getSortedPostData, topic, setTopic, value, setRengeValue, color, setColor, typeOrientation, setOrientationValue, getPosts, posts} = useContext(LikesContext);
+  const { setFilter, setTopic, setRengeValue, setColor, setOrientationValue,} = useContext(LikesContext);
   const [showed, setShowedFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [animateButton, setAnimateButton] = useState(false);
@@ -16,17 +16,20 @@ const Filter = (props) => {
   const getShowedFilter = () => {
       return showed ? setShowedFilter(false) : setShowedFilter(true);
   };
+
   const getOrientirValue=(event)=> {
     event.preventDefault()
     setOrientationValue(event.target.text)
   }
+
   const getfiltered=(event)=> {
     event.preventDefault()
-    return  setFilter(false)
+    return setFilter(false)
   }
+
   const getallPosts=(event)=> {
     event.preventDefault()
-    return  setFilter(true)
+    return setFilter(true)
   }
   return (
     <div className={classes.sorting}>
