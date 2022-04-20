@@ -24,6 +24,10 @@ const Filter = (props) => {
     event.preventDefault()
     return  setFilter(false)
   }
+  const getallPosts=(event)=> {
+    event.preventDefault()
+    return  setFilter(true)
+  }
   return (
     <div className={classes.sorting}>
       <button
@@ -77,9 +81,9 @@ const Filter = (props) => {
                 onClickFunc = {getfiltered}
                 type="sybmit"/>
               <BtnPrimary
-              value={"Reset filter"}
-
-              type="sybmit"/>
+                value={"Reset filter"}
+                  onClickFunc = {getallPosts}
+                type="sybmit"/>
             </div>
           </div>
         </form>

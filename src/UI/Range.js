@@ -14,7 +14,7 @@ const Range = ({text, onChangeFunc}) => {
     <div className={classes.rangeInput}>
       <input
         type="range"
-        min="1" max="10"
+        min="1" max="30"
         value={rangeValue}
         onChange={handleChange}
         step="1"/>

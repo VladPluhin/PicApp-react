@@ -50,7 +50,8 @@ const App = () => {
   function getPosts(posts, data, sortedPost, noneFiltered) {
     let newArr=[]
     if ( data && noneFiltered === false) {
-        return setPosts(sortedPost);
+        console.log(data)
+        return setPosts([...sortedPost.response.results]);
     }else if (data && noneFiltered == true ) {
       newArr = [...posts, ...data.response.results];
       return setPosts(newArr);

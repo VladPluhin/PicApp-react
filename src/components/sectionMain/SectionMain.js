@@ -21,9 +21,11 @@ const SectionMain = () => {
   useEffect(() => {
     getPosts(posts, data,sortedPost, noneFiltered)
   }, [data]);
+
   useEffect(() => {
      getSortedPostData(setSortedPosts);
   }, [noneFiltered]);
+
   useEffect(() => {
      getPosts(posts, data, sortedPost, noneFiltered);
   }, [noneFiltered]);
@@ -43,10 +45,10 @@ const SectionMain = () => {
     return (
       <section className={classes.sectionMain}>
         <div className="container">
-          {/* <CardRow
+          <CardRow
             data={posts}
             likesRow={false}
-          /> */}
+          />
           <div ref={lastElement} style={{ height: 1 }}></div>
         </div>
       </section>
