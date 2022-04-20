@@ -8,47 +8,22 @@ import BtnPrimary from "../../UI/BtnPrimary";
 import { LikesContext } from "../../context/context";
 
 const Filter = (props) => {
-  const { state, switcherPost, setSwitcher, getResetFilter , data,   setNotFiltered, getSortedCardData, getSortedPostData} =useContext(LikesContext);
+  const { state, switcherPost, setSwitcher,setFilter, getResetFilter , data,   setNotFiltered, getSortedCardData, getSortedPostData, topic, setTopic, value, setRengeValue, color, setColor, typeOrientation, setOrientationValue, getPosts, posts} = useContext(LikesContext);
   const [showed, setShowedFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [topic, setTopic]= useState('')
-  const [typeOrientation, setOrientationValue]= useState('')
-  const [value, setRengeValue]= useState(10)
-  const [color, setColor]= useState('black')
   const [animateButton, setAnimateButton] = useState(false);
-  function NewOptions (oldquery, oldperPage, oldcolor, oldtypeOrientation) {
-    this.query = oldquery;
-    this.perPage = oldperPage;
-    this.color = oldcolor;
-    if(oldtypeOrientation.length > 0) {
-      this.orientation = oldtypeOrientation
-    }
-  }
 
   const getShowedFilter = () => {
       return showed ? setShowedFilter(false) : setShowedFilter(true);
   };
-
-  const getNewPosts = (event) => {
-    event.preventDefault()
-
-    setSwitcher(false)
-    console.log(switcherPost)
-    const newobj  = {...new NewOptions(topic, value, color, typeOrientation)}
-    return state.createApi.search.getPhotos(newobj)
-      .then((result) => {
-       props.getSorting(result);
-      })
-      .catch(() => {
-        console.log("something went wrong!");
-      });
-  }
-
   const getOrientirValue=(event)=> {
     event.preventDefault()
     setOrientationValue(event.target.text)
   }
-
+  const getfiltered=(event)=> {
+    event.preventDefault()
+    return  setFilter(false)
+  }
   return (
     <div className={classes.sorting}>
       <button
@@ -99,17 +74,11 @@ const Filter = (props) => {
             <div className={classes.btnWrapper}>
               <BtnPrimary
                 value={"Find Posts"}
-                onClickFunc = {(event)=> {
-                event.preventDefault()
-                getSortedPostData( data,   setNotFiltered)
-                }}
+                onClickFunc = {getfiltered}
                 type="sybmit"/>
               <BtnPrimary
               value={"Reset filter"}
-              onClickFunc = {(event)=>{
-                event.preventDefault()
-                return  setSwitcher(true)
-              }}
+
               type="sybmit"/>
             </div>
           </div>

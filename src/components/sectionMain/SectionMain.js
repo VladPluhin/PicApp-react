@@ -7,7 +7,7 @@ import { useObserver } from "../../hooks/useObserver";
 import { LikesContext } from "../../context/context";
 
 const SectionMain = () => {
-  const { data, setRespones, page, setPageRender, getData ,getPosts, posts ,notFiltered , sortedPost} = useContext(LikesContext);
+  const { data, setRespones, page, setPageRender, getData ,getPosts, posts ,noneFiltered , sortedPost, getSortedPostData, setSortedPosts} = useContext(LikesContext);
   const lastElement = useRef();
 
   useObserver(lastElement, data, () => {
@@ -19,8 +19,16 @@ const SectionMain = () => {
   }, [page]);
 
   useEffect(() => {
-    getPosts(posts, data)
+    getPosts(posts, data,sortedPost, noneFiltered)
   }, [data]);
+  useEffect(() => {
+     getSortedPostData(setSortedPosts);
+  }, [noneFiltered]);
+  useEffect(() => {
+     getPosts(posts, data, sortedPost, noneFiltered);
+  }, [noneFiltered]);
+
+
 
   if (posts.length === 0) {
     return (
@@ -31,26 +39,14 @@ const SectionMain = () => {
         </div>
       </section>
     );
-  } else if  (posts.length !== 0 && notFiltered===true) {
+  } else if  (posts.length !== 0 ) {
     return (
       <section className={classes.sectionMain}>
         <div className="container">
-          <CardRow
+          {/* <CardRow
             data={posts}
             likesRow={false}
-          />
-          <div ref={lastElement} style={{ height: 1 }}></div>
-        </div>
-      </section>
-    );
-  } else if (posts.length !== 0 && notFiltered===false) {
-    return (
-      <section className={classes.sectionMain}>
-        <div className="container">
-          <CardRow
-            data={sortedPost}
-            likesRow={false}
-          />
+          /> */}
           <div ref={lastElement} style={{ height: 1 }}></div>
         </div>
       </section>

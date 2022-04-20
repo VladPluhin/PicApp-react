@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -17,14 +17,14 @@ const App = () => {
   const [data, setRespones] = useState();
   const [page, setPageRender] = useState(0);
   const [posts, setPosts] = useState([]);
-  const [nonefiltered, setFilter] = useState(true);
+  const [noneFiltered, setFilter] = useState(true);
   const [topic, setTopic]= useState('')
   const [typeOrientation, setOrientationValue]= useState('')
   const [value, setRengeValue]= useState(10)
   const [color, setColor]= useState('black')
-  const [resetFilter, setResetFilter] = useState(false)
   const [sortedPost, setSortedPosts]  = useState([]);
-  const [notFiltered, setNotFiltered] = useState(true)
+
+
   function NewOptions (oldquery, oldperPage, oldcolor, oldtypeOrientation) {
     this.query = oldquery;
     this.perPage = oldperPage;
@@ -33,6 +33,7 @@ const App = () => {
       this.orientation = oldtypeOrientation
     }
   }
+
   function getData(setRespones , page ) {
     return state.createApi.photos
       .list({
@@ -45,37 +46,28 @@ const App = () => {
         console.log("something went wrong!");
       });
   }
-   function getPosts(posts, data) {
-    if (data) {
-    let newArr = [...posts, ...data.response.results];
+
+  function getPosts(posts, data, sortedPost, noneFiltered) {
+    let newArr=[]
+    if ( data && noneFiltered === false) {
+        return setPosts(sortedPost);
+    }else if (data && noneFiltered == true ) {
+      newArr = [...posts, ...data.response.results];
       return setPosts(newArr);
     }
   }
-
   function getSortedPostData(setAllSortPosts) {
-      const newobj  = {...new NewOptions(topic, value, color, typeOrientation)}
-      return state.createApi.search.getPhotos(newobj)
+    const newobj  = {...new NewOptions(topic, value, color, typeOrientation)}
+    return state.createApi.search.getPhotos(newobj)
       .then((result) => {
-      console.log(12313313)
-        return setAllSortPosts(result);
+        return setSortedPosts(result);
       })
       .catch(() => {
         console.log("something went wrong!");
       });
    }
-  function getSortedCardData( data, setNotFiltered) {
-     if (data)  {
-      let newArr = [...data.response.results]
-      setNotFiltered(false)
-      console.log(newArr)
-      return setPosts(newArr);
-    }
-  }
-
-
-
   return (
-    <LikesContext.Provider value={{state, getData, resetFilter, likePostData, setLikedPost, data, setRespones, page, setPageRender   ,topic, setTopic, typeOrientation, setOrientationValue,value, setRengeValue, color, setColor, NewOptions, nonefiltered, setFilter, getSortedPostData, posts, getPosts, notFiltered, setNotFiltered, getSortedCardData, sortedPost}}>
+    <LikesContext.Provider value={{state, getData, likePostData, setLikedPost, data, setRespones, page, setPageRender   ,topic, setTopic, typeOrientation, setOrientationValue,value, setRengeValue, color, setColor, NewOptions, setFilter, getSortedPostData, posts, getPosts, noneFiltered, setFilter, sortedPost}}>
       <Router>
         <Header />
         <Switch>
