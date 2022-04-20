@@ -49,8 +49,8 @@ const App = () => {
   function getPosts(posts, data, sortedPost, noneFiltered) {
     let newArr=[]
     if ( data && noneFiltered === false) {
-        return setSortedPosts([...sortedPost.response.results]);
-    }else if (data && noneFiltered == true ) {
+      return setSortedPosts([...sortedPost.response.results]);
+    }else if (data && noneFiltered === true ) {
       newArr = [...posts, ...data.response.results];
       return setPosts(newArr);
     }

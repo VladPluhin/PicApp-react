@@ -23,11 +23,12 @@ const SectionMain = () => {
   }, [data]);
 
   useEffect(() => {
-     getSortedPostData(setSortedPosts);
+      getSortedPostData(setSortedPosts);
   }, [noneFiltered]);
 
   useEffect(() => {
-     getPosts(posts, data, sortedPost, noneFiltered);
+      getPosts(posts, data, sortedPost, noneFiltered);
+
   }, [noneFiltered]);
 
 
@@ -41,17 +42,12 @@ const SectionMain = () => {
         </div>
       </section>
     );
-  } else if  (posts.length !== 0 || sortedPosts.length !== 0) {
+  } else{
     return (
       <section className={classes.sectionMain}>
         <div className="container">
           <CardRow
-            data={ (posts, sortedPosts) => {
-              if(noneFiltered ==true) {
-                return posts
-                }else {
-                return sortedPosts}
-            }}
+            data={noneFiltered ? posts : sortedPosts}
             likesRow={false}
           />
           <div ref={lastElement} style={{ height: 1 }}></div>
