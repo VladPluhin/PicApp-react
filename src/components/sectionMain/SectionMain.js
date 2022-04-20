@@ -7,7 +7,7 @@ import { useObserver } from "../../hooks/useObserver";
 import { LikesContext } from "../../context/context";
 
 const SectionMain = () => {
-  const { data, setRespones, page, setPageRender, getData ,getPosts, posts ,noneFiltered , sortedPost, getSortedPostData, setSortedPosts} = useContext(LikesContext);
+  const { data, setRespones, page, setPageRender, getData ,getPosts, posts ,noneFiltered , sortedPost, getSortedPostData, setSortedPosts, sortedPosts} = useContext(LikesContext);
   const lastElement = useRef();
 
   useObserver(lastElement, data, () => {
@@ -41,12 +41,17 @@ const SectionMain = () => {
         </div>
       </section>
     );
-  } else if  (posts.length !== 0 ) {
+  } else if  (posts.length !== 0 || sortedPosts.length !== 0) {
     return (
       <section className={classes.sectionMain}>
         <div className="container">
           <CardRow
-            data={posts}
+            data={ (posts, sortedPosts) => {
+              if(noneFiltered ==true) {
+                return posts
+                }else {
+                return sortedPosts}
+            }}
             likesRow={false}
           />
           <div ref={lastElement} style={{ height: 1 }}></div>

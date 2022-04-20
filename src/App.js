@@ -14,17 +14,15 @@ import State from "./state/state";
 const App = () => {
   const [likePostData, setLikedPost] = useState([]);
   const state = new State();
-  const [data, setRespones] = useState();
+  const [data, setRespones] = useState(); //то что получаем от сервера
   const [page, setPageRender] = useState(0);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]); // массив готовых постов
   const [noneFiltered, setFilter] = useState(true);
   const [topic, setTopic]= useState('')
   const [typeOrientation, setOrientationValue]= useState('')
   const [value, setRengeValue]= useState(10)
   const [color, setColor]= useState('black')
-  const [sortedPost, setSortedPosts]  = useState([]);
-
-
+  const [sortedPost, setSortedPosts]  = useState([]);//то что получаем сортированные
   function NewOptions (oldquery, oldperPage, oldcolor, oldtypeOrientation) {
     this.query = oldquery;
     this.perPage = oldperPage;
@@ -40,6 +38,7 @@ const App = () => {
         page: page,
       })
       .then((result) => {
+      console.log(result)
         setRespones(result);
       })
       .catch(() => {
@@ -50,8 +49,7 @@ const App = () => {
   function getPosts(posts, data, sortedPost, noneFiltered) {
     let newArr=[]
     if ( data && noneFiltered === false) {
-        console.log(data)
-        return setPosts([...sortedPost.response.results]);
+        return setSortedPosts([...sortedPost.response.results]);
     }else if (data && noneFiltered == true ) {
       newArr = [...posts, ...data.response.results];
       return setPosts(newArr);
@@ -68,7 +66,7 @@ const App = () => {
       });
    }
   return (
-    <LikesContext.Provider value={{state, getData, likePostData, setLikedPost, data, setRespones, page, setPageRender   ,topic, setTopic, typeOrientation, setOrientationValue,value, setRengeValue, color, setColor, NewOptions, setFilter, getSortedPostData, posts, getPosts, noneFiltered, setFilter, sortedPost}}>
+    <LikesContext.Provider value={{state, getData, likePostData, setLikedPost, data, setRespones, page, setPageRender   ,topic, setTopic, typeOrientation, setOrientationValue,value, setRengeValue, color, setColor, NewOptions, setFilter, getSortedPostData, posts, getPosts, noneFiltered, setFilter, sortedPost,}}>
       <Router>
         <Header />
         <Switch>
