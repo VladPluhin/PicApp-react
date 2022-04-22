@@ -12,16 +12,22 @@ const Filter = (props) => {
   const [showed, setShowedFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [animateButton, setAnimateButton] = useState(false);
-
+  const [filter, setFilters]= useState({
+      landscape: null,
+      portrait:null,
+      squarish: null
+  })
   const getShowedFilter = () => {
       return showed ? setShowedFilter(false) : setShowedFilter(true);
   };
 
-  const getOrientirValue=(event)=> {
-    event.preventDefault()
-    setOrientationValue(event.target.text)
+  const getOrientirValue=(key,value )=> {
+    setFilters((prev)=> ({
+        ...prev,
+        key: value
+      })
+   )
   }
-
   const getfiltered=(event)=> {
     event.preventDefault()
     return setFilter(false)
@@ -47,7 +53,7 @@ const Filter = (props) => {
         unmountOnExit
         onEnter={() => setAnimateButton(true)}
         onExited={() => setAnimateButton(false)}>
-        <form className={classes.sortingHolder} onSubmit={(e)=>e.preventDefault()}>
+        <div className={classes.sortingHolder} >
           <div className={classes.container}>
             <Search
               value={searchQuery}
@@ -56,11 +62,11 @@ const Filter = (props) => {
               onChangeFunc={setRengeValue}/>
             <div className={classes.orientation}>
               <BtnPrimary  linkHref={'#'} value={"landscape"}
-                onClickFunc={ getOrientirValue}/>
+                onClickFunc={ ()=> getOrientirValue('landscape','landscape')}/>
               <BtnPrimary linkHref={'#'}  value={"portrait"}
-                onClickFunc={ getOrientirValue}/>
+                 onClickFunc={ ()=> getOrientirValue('landscape','landscape')}/>
               <BtnPrimary linkHref={'#'}  value={"squarish"}
-                onClickFunc={ getOrientirValue}/>
+                  onClickFunc={ ()=> getOrientirValue('landscape','landscape')}/>
             </div>
             <div className={classes.colors}>
               <Select
@@ -89,7 +95,7 @@ const Filter = (props) => {
                 type="sybmit"/>
             </div>
           </div>
-        </form>
+        </div>
       </CSSTransition>
     </div>
   );

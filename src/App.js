@@ -14,11 +14,14 @@ import State from "./state/state";
 const App = () => {
   const state = new State();
   const [likePostData, setLikedPost] = useState([]);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState({
+    sortedPosts: [],
+    posts: []
+  });
   const [sortedPost, setSortedPosts]  = useState([]);
   const [data, setRespones] = useState();
   const [sortedData, setSortedData]  = useState([]);
-  const [results, setResults] = useState([]);
+  const [resuls, setResults] = useState([]);
   const [page, setPageRender] = useState(0);
   const [noneFiltered, setFilter] = useState(true);
   const [topic, setTopic]= useState('')
@@ -34,60 +37,57 @@ const App = () => {
     }
   }
 
-  function getData(setRespones , page ) {
+  function getData(page ) {
     return state.createApi.photos
       .list({
         page: page,
       })
       .then((result) => {
-      console.log(result)
-        setRespones(result);
+         return setRespones(result);
       })
       .catch(() => {
         console.log("something went wrong!");
+        return []
       });
   }
-  function getPosts(posts, data) {
-    let newArr = []
+  function getSortedPostData(setSortedData) {
+    const newobj  = {...new NewOptions(topic, value, color, typeOrientation)}
+    return state.createApi.search.getPhotos(newobj)
+      .then((result) => {
+        return result;
+      })
+      .catch(() => {
+        console.log("something went wrong!");
+        return []
+      });
+  }
+  function getPosts(posts, data, sortedData) {
+    let newArr = posts;
     if (data) {
-        newArr = [...posts, ...data.response.results];
-        return setPosts(newArr);
-      }
+      newArr.posts=[...posts.posts, ...data.response.results];
+      return setPosts(newArr);
+    }else if(sortedData) {
+      newArr.sortedPosts=[...posts.sortedPosts, ...data.response.results];
+      return setPosts(newArr);
+    }
   }
 
-  // function getSortedPostData(setSortedData) {
-  //   const newobj  = {...new NewOptions(topic, value, color, typeOrientation)}
-  //    if(noneFiltered===false) {
-  //       return state.createApi.search.getPhotos(newobj)
-  //     .then((result) => {
-  //        setSortedData(result);
-  //        console.log(result)
-  //     })
-  //     .catch(() => {
-  //       console.log("something went wrong!!");
-  //     });
-  //  }
+  function getSotedPosts(data) {
+    if ( data) {
+      return setPosts([...data.response.results]);
+    }
+  }
+  function returned(noneFiltered,posts,sortedPost) {
+    if (noneFiltered===true) {
+      setResults(posts)
 
-  // }
-
-
-
-  // function getSortedPosts(data) {
-  //   if ( data) {
-  //     return setSortedPosts([...data.response.results]);
-  //   }
-  // }
-
-  // function getFilteredPostData(noneFiltered, posts, sortedPost) {
-  //     if (noneFiltered==true) {
-  //      return setResults(posts)
-  //     }else{
-  //       return  setResults(sortedPost)
-  //     }
-  //  }
+    }else{
+        setResults(sortedPost)
+    }
+  }
 
   return (
-    <LikesContext.Provider value={{state, getData, likePostData, setLikedPost, data, setRespones, page, setPageRender   ,topic, setTopic, typeOrientation, setOrientationValue,value, setRengeValue, color, setColor, NewOptions, setFilter, posts, getPosts, noneFiltered, setFilter, sortedPost, results, setResults,}}>
+    <LikesContext.Provider value={{state, getData, likePostData, setLikedPost, data, setRespones, page, setPageRender   ,topic, setTopic, typeOrientation, setOrientationValue,value, setRengeValue, color, setColor, NewOptions, setFilter, getSortedPostData, posts, getPosts, noneFiltered, setFilter, sortedPost, resuls, setResults, returned, getSotedPosts}}>
       <Router>
         <Header />
         <Switch>

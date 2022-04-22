@@ -18,7 +18,7 @@ const Range = ({text, onChangeFunc}) => {
         value={rangeValue}
         onChange={handleChange}
         step="1"/>
-        <span className={classes.rangeText}>{textValue}   <span>{rangeValue}</span></span>
+        <span className={classes.rangeText}>{textValue}<span>{rangeValue}</span></span>
 
     </div>
   )
