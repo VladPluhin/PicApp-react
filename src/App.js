@@ -8,18 +8,17 @@ import Header from "./components/Header/Header";
 import SectionMain from "./components/SectionMain/SectionMain";
 import SectionAbout from "./components/SectionAbout/SectionAbout";
 import SectionLikedPost from "./components/SectionLikedPost/SectionLikedPost";
+import SectionSearch from "./components/SectionSearch/SectionSearch";
 import { LikesContext } from "./context/context";
 import State from "./state/state";
 
 const App = () => {
   const state = new State();
   const [likePostData, setLikedPost] = useState([]);
-  const [posts, setPosts] = useState([]);
+ 
   const [sortedPost, setSortedPosts]  = useState([]);
-  const [data, setRespones] = useState();
   const [sortedData, setSortedData]  = useState([]);
   const [results, setResults] = useState([]);
-  const [page, setPageRender] = useState(0);
   const [noneFiltered, setFilter] = useState(true);
   const [topic, setTopic]= useState('')
   const [typeOrientation, setOrientationValue]= useState('')
@@ -47,13 +46,7 @@ const App = () => {
         console.log("something went wrong!");
       });
   }
-  function getPosts(posts, data) {
-    let newArr = []
-    if (data) {
-        newArr = [...posts, ...data.response.results];
-        return setPosts(newArr);
-      }
-  }
+ 
 
   // function getSortedPostData(setSortedData) {
   //   const newobj  = {...new NewOptions(topic, value, color, typeOrientation)}
@@ -87,13 +80,19 @@ const App = () => {
   //  }
 
   return (
-    <LikesContext.Provider value={{state, getData, likePostData, setLikedPost, data, setRespones, page, setPageRender   ,topic, setTopic, typeOrientation, setOrientationValue,value, setRengeValue, color, setColor, NewOptions, setFilter, posts, getPosts, noneFiltered, setFilter, sortedPost, results, setResults,}}>
+    <LikesContext.Provider value={{
+    likePostData, 
+    setLikedPost, 
+    topic, setTopic, typeOrientation, 
+    setOrientationValue,value, setRengeValue, 
+    color, setColor, NewOptions, setFilter}}> 
       <Router>
         <Header />
         <Switch>
           <Route path="/" exact   render={() => <SectionMain/>}/>
-          <Route path="/about/"   render={() => <SectionAbout/>}/>
+          <Route path="/search/"  render={() => <SectionSearch/>} />
           <Route path="/liked-photos/"  render={() => <SectionLikedPost/>} />
+          <Route path="/about/"   render={() => <SectionAbout/>}/>
         </Switch>
       </Router>
     </LikesContext.Provider>

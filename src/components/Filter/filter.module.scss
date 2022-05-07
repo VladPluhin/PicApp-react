@@ -6,20 +6,40 @@
 
 
 .sortingHolder {
-    position: absolute;
-    top: 100%;
-    right: 0px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 3;
+    height: 100%;
+    padding-top: 200px;
+    margin: 0 auto;
+    background: radial-gradient(circle, rgba(0,97,186,0.7) 9%, rgba(3,31,210,0.8) 31%, rgba(10,9,120,1) 91%);
+     
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
     padding: 0 15px;
-    width: 66vw;
-    max-width: 1150px;
-    .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-    }
 }
 
 .orientation {
-    padding: 0 10px;
+    margin-bottom: 15px;
+    padding-top: 15px;
+   
+}
+
+.count {
+    margin-bottom: 15px;
+}
+.colors {
+    margin-bottom: 15px;
+}
+
+.title {
+    margin-bottom: 8px;
+    line-height: 1;
+    font-weight: 400;
 }

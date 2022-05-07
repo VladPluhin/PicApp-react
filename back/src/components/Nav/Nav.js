@@ -7,15 +7,7 @@ const Nav = (props) => {
   return (
     <ul className="navLists">
       <li>
-        <Link to="/liked-photos">  
-          <span className="icons-heart"> &#10084; </span>
-          <span></span>
-        </Link>
-      </li>
-      <li>
-        <Link to="/search"> 
-          <span className="icons-search"> &#9906;</span>
-         </Link>
+        <Link to="/liked-photos"> liked photos </Link>
       </li>
       <li>
         <Link to="/about"> about</Link>

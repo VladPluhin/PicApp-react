@@ -1,0 +1,70 @@
+
+@keyframes animation {
+    0% { transform: rotate(0deg) }
+    50% { transform: rotate(180deg) }
+    100% { transform: rotate(360deg) }
+}
+
+@keyframes animation2 {
+  0% { transform: rotate(0deg) }
+  50% { transform: rotate(-180deg) }
+  100% { transform: rotate(-360deg) }
+}
+
+.spiner div {
+  position: absolute;
+  animation: animation  2s linear infinite;
+  width: 135px;
+  height: 140px;
+  top: 77px;
+  left: 77px;
+  border-radius: 50%;
+  transform-origin: 71px 73px;
+  box-shadow: 0 7px 0 0 #989ad8;
+}
+
+.spiner {
+
+  .round2 {
+    position: absolute;
+    animation: animation2 2s linear infinite;
+    width: 145px;
+    height: 145px;
+    top: 78px;
+    left: 80px;
+    border-radius: 50%;
+    // box-shadow: 0 3.861px 0 0 #85a2b6;
+    transform-origin: 71px 73px;
+    box-shadow: 0 7px 0 0 #070aa1;
+  }
+}
+
+.spinnerWrapper {
+  min-height: 750px ;
+}
+
+.loadingioSpinner {
+  width: 297px;
+  height: 297px;
+  margin: 0 auto;
+  display: block;
+  overflow: hidden;
+  background: none;
+  text-align: center;
+  color: #fff;
+  letter-spacing: .03em;
+  font-weight: 600;
+  text-shadow: 1px 1px 1px #302b31;
+  font-size: 20px;
+}
+
+.spiner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+
+.spiner div { box-sizing: content-box; }

@@ -1,27 +1,41 @@
 import React, { useState, useContext } from "react";
 import classes from "./filter.module.scss";
 import { CSSTransition } from "react-transition-group";
-import Select from "../../UI/Select";
 import Search from "../../UI/Search";
-import Range from "../../UI/Range";
-import BtnPrimary from "../../UI/BtnPrimary";
 import { LikesContext } from "../../context/context";
+import State from '../../state/state';
+import BtnPrimary from  '../../UI/BtnPrimary';
 
 const Filter = (props) => {
-  const { setFilter, setTopic, setRengeValue, setColor, setOrientationValue,} = useContext(LikesContext);
+  const nodeRef = React.useRef(null)
+  const state= new State;
+  const { setFilter, setColor,} = useContext(LikesContext);
   const [showed, setShowedFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [animateButton, setAnimateButton] = useState(false);
-
+  const [topic, setTopic]= useState('');
+  const [filter, setFilters]= useState({
+    query: null,
+    page:1,
+    perPage: null,
+    color: null,
+    orientation:null
+  })
+ 
+  function  getFilterValue( event, key) {
+      setFilters((prev)=> ({
+        ...prev,
+        key: event.target.value
+      })
+   
+    )
+    console.log(filter)
+}
   const getShowedFilter = () => {
+      showed ?  document.body.classList.remove('active-filter'): 
+      document.body.classList.add('active-filter')
       return showed ? setShowedFilter(false) : setShowedFilter(true);
   };
-
-  const getOrientirValue=(event)=> {
-    event.preventDefault()
-    setOrientationValue(event.target.text)
-  }
-
   const getfiltered=(event)=> {
     event.preventDefault()
     return setFilter(false)
@@ -41,55 +55,55 @@ const Filter = (props) => {
         <span></span>
       </button>
       <CSSTransition
+        nodeRef={nodeRef} 
         in={showed}
         timeout={200}
         classNames="filter"
         unmountOnExit
         onEnter={() => setAnimateButton(true)}
         onExited={() => setAnimateButton(false)}>
-        <form className={classes.sortingHolder} onSubmit={(e)=>e.preventDefault()}>
+        <div className={classes.sortingHolder} >
           <div className={classes.container}>
+            <h4 className={classes.title}> Search posts</h4>
             <Search
               value={searchQuery}
               onChangeFunc={setTopic}/>
-            <Range text={"Chose amount posts:"}
-              onChangeFunc={setRengeValue}/>
             <div className={classes.orientation}>
-              <BtnPrimary  linkHref={'#'} value={"landscape"}
-                onClickFunc={ getOrientirValue}/>
-              <BtnPrimary linkHref={'#'}  value={"portrait"}
-                onClickFunc={ getOrientirValue}/>
-              <BtnPrimary linkHref={'#'}  value={"squarish"}
-                onClickFunc={ getOrientirValue}/>
+              <h4 className={classes.title}> Posts orientation</h4>
+              <select className={classes.select} onChange={(event)=>{getFilterValue(event, 'query')}}>
+                  {state.filterOptions.orientation.map((item)=>{
+                    return <option value={item} key={item}>{item}</option>
+                })}
+              </select>
+            </div>
+            <div className={classes.count}>
+              <h4 className={classes.title}>Count posts</h4>
+              <select className={classes.select} >
+                  {state.filterOptions.postsCounter.map((item)=>{
+                    return <option value={item} key={item}>{item}</option>
+                })}
+              </select>
             </div>
             <div className={classes.colors}>
-              <Select
-                onChangeFunc={setColor}
-                options={[
-                    "black_and_white",
-                    "black",
-                    "white",
-                    "yellow",
-                    "orange",
-                    "red",
-                    "purple",
-                    "magenta",
-                    "green",
-                    "teal",
-                    "blue",]}/>
+              <h4 className={classes.title}> Posts colors</h4>
+              <select className={classes.select} >
+                  {state.filterOptions.colors.map((item)=>{
+                    return <option value={item} key={item}>{item}</option>
+                })}
+              </select>
             </div>
             <div className={classes.btnWrapper}>
-              <BtnPrimary
+                <BtnPrimary
                 value={"Find Posts"}
-                onClickFunc = {getfiltered}
+                onClick = {getfiltered}
                 type="sybmit"/>
               <BtnPrimary
                 value={"Reset filter"}
-                onClickFunc = {getallPosts}
+                onClick = {getallPosts}
                 type="sybmit"/>
             </div>
           </div>
-        </form>
+        </div>
       </CSSTransition>
     </div>
   );

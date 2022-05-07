@@ -1,9 +1,43 @@
 import { createApi } from "unsplash-js";
 
 export default class  State {
-    landscape = `'landscape'`;
-    createApi = createApi({
-        accessKey: "k6MK8xSwdSo_9QcKO4iLm0r_nirfy7FUADRtpAMqhRw",
-        headers: { 'X-Custom-Header': 'foo' }
-    });
+   
+  createApi = createApi({
+      accessKey: "k6MK8xSwdSo_9QcKO4iLm0r_nirfy7FUADRtpAMqhRw",
+  });
+  getData(page , setPosts) {
+      return this.createApi.photos
+        .list({
+          page: page,
+        })
+        .then((result) => {
+          console.log(result)
+          return setPosts(result); 
+        })
+        .catch(() => {
+          console.log("something went wrong!");
+        });
+  }
+
+  filterOptions= {
+    orientation: [
+      "portrait", "landscape","squarish"
+    ],
+    postsCounter:[
+      "5", "15", "30"
+    ],
+    colors: [
+      "black_and_white",
+        "black",
+        "white",
+        "yellow",
+        "orange",
+        "red",
+        "purple",
+        "magenta",
+        "green",
+        "teal",
+        "blue",
+    ]
+  }
 }

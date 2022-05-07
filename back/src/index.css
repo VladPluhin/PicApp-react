@@ -96,7 +96,7 @@ code {
 .filter-exit-active {
   opacity: 0;
   transform: scaleX(0);
-  transform-origin: left;
+  transform-origin: right;
   transition-delay: 3s, 3s;
   transition: opacity 300ms, transform 300ms;
 }
@@ -104,68 +104,59 @@ code {
 .filter-enter-done {
     opacity: 1;
     transform: scaleX(1);
-    transform-origin: left;
+    transform-origin: right;
     transition: opacity 300ms, transform 300ms;
 }
 
-
-
-.active-filter {
-  position: relative;
-  overflow: hidden;
-}
-
-
 .sortingclose {
-  background-color: transparent;
-  border: none;
-  width: 40px;
-  height: 20px;
-  position: relative;
-  padding: 0;
-  cursor: pointer;
-  outline: none;
-  z-index: 5;
+	 background-color: transparent;
+	 border: none;
+	 width: 40px;
+	 height: 20px;
+	 position: relative;
+	 padding: 0;
+	 cursor: pointer;
+	 outline: none;
 }
-.sortingclose.active span:first-child:after {
-  left: 8px;
+ .sortingclose.active span:first-child:after {
+	 left: 8px;
 }
-.sortingclose.active span:nth-child(2):after {
-  left: 20px;
+ .sortingclose.active span:nth-child(2):after {
+	 left: 20px;
 }
-.sortingclose.active span:nth-child(3):after {
-  left: 10px;
+ .sortingclose.active span:nth-child(3):after {
+	 left: 10px;
 }
-.sortingclose span {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 1px;
-  right: 0;
-  background-color: #fff;
+ .sortingclose span {
+	 position: absolute;
+	 top: 0;
+	 left: 0;
+	 height: 1px;
+	 right: 0;
+	 background-color: #fff;
 }
-.sortingclose span:after {
-  transition: left 0.15s ease;
-  position: absolute;
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  border: 1px solid #fff;
-  background-color: #fff;
-  top: -3px;
-  left: 15px;
+ .sortingclose span:after {
+	 transition: left 0.15s ease;
+	 position: absolute;
+	 content: "";
+	 width: 6px;
+	 height: 6px;
+	 border-radius: 50%;
+	 border: 1px solid #fff;
+	 background-color: #fff;
+	 top: -3px;
+	 left: 15px;
 }
-.sortingclose span:nth-child(2) {
-  top: 10px;
+ .sortingclose span:nth-child(2) {
+	 top: 10px;
 }
-.sortingclose span:nth-child(2):after {
-  left: 10px;
+ .sortingclose span:nth-child(2):after {
+	 left: 10px;
 }
-.sortingclose span:nth-child(3) {
-  bottom: 0;
-  top: auto;
+ .sortingclose span:nth-child(3) {
+	 bottom: 0;
+	 top: auto;
 }
-.sortingclose span:nth-child(3):after {
-  left: 25px;
+ .sortingclose span:nth-child(3):after {
+	 left: 25px;
 }
