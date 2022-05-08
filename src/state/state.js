@@ -11,14 +11,22 @@ export default class  State {
           page: page,
         })
         .then((result) => {
-          console.log(result)
           return setPosts(result); 
         })
         .catch(() => {
           console.log("something went wrong!");
         });
   }
-
+  getSortedPostData(options, setSortedData ) {
+      return this.createApi.search.getPhotos(options)
+        .then((result) => {
+          console.log(options)
+           setSortedData(result.response.results);
+        })
+        .catch(() => {
+          console.log("something went wrong!!");
+        });
+  }
   filterOptions= {
     orientation: [
       "portrait", "landscape","squarish"

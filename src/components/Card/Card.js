@@ -1,12 +1,12 @@
 import React, { useContext, useState , useRef} from "react";
 import classes from "./card.module.scss";
-import { LikesContext } from "../../context/context";
+import { AppContext } from "../../context/context";
 import Popup from "../Popup/Popup";
 import { CSSTransition } from 'react-transition-group';
 
 const Card = (props) => {
   const card = props.card;
-  const { likePostData, setLikedPost } = useContext(LikesContext);
+  const { likePostData, setLikedPost } = useContext(AppContext);
   const [hovered, setHovered] = useState(false);
   const hoverOff = useRef();
   const hoverOn = useRef();

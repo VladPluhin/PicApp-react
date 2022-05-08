@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import classes from "./cardRow.module.scss";
 import Card from "../Card/Card";
-import { LikesContext } from "../../context/context";
+import { AppContext } from "../../context/context";
 
 const CardRow = (props) => {
-  const { likePostData } = useContext(LikesContext);
+  const { likePostData } = useContext(AppContext);
   if (props.likesRow === false) {
     return (
       <div className={classes.cardRow}>
