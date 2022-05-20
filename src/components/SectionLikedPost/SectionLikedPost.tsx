@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./sectionLikedPost.module.scss";
-import CardRow from "./../CardRow/CardRow";
+import CardRow from "../CardRow/CardRow";
 
 const SectionLikedPost = () => {
   return (

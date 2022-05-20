@@ -1,10 +1,11 @@
 import React from "react";
 import "./nav.scss";
-import {  Link } from "react-router-dom";
+import {  Link, Outlet } from "react-router-dom";
 
 
-const Nav = (props) => {
+const Nav = () => {
   return (
+   <>
     <ul className="navLists">
       <li>
         <Link to="/liked-photos">  
@@ -20,8 +21,9 @@ const Nav = (props) => {
       <li>
         <Link to="/about"> about</Link>
       </li>
-
     </ul>
+   < Outlet/>
+     </>
   );
 };
 

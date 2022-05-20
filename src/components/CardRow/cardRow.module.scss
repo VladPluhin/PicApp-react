@@ -6,7 +6,10 @@
 
 .cardCol {
   padding: 0 10px;
-  max-width: 31%;
+  max-width: 45%;
   width: 100%;
   display: block;
+  @media (min-width: 767px) {
+    max-width: 30%;
+  }
 }

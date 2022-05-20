@@ -78,8 +78,10 @@ select {
     cursor: pointer;
     font-weight: 600;
     margin-right: 10px;
-    &:hover {
-        background-color: #0075fb;
-        border-color: #0075fb;
+    background-color: transparent;
+    option {
+        background-color: transparent;
+        color: #000;
+        display: inline-block;
     }
 }

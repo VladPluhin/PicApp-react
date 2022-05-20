@@ -1,23 +1,31 @@
 import React from "react";
 import classes from "./pagination.module.scss";
 
-const Pagination = (props) => {
+
+interface PaginationProps {
+  curentPage: number;
+  totalItem: number;
+  itemAmount: number;
+  PageRender: () => void
+}
+
+const Pagination:React.FC<PaginationProps> = ({curentPage, totalItem, itemAmount, PageRender}) => {
   const hasPrev = () => {
-    return props.curentPage > 1;
+    return curentPage > 1;
   };
 
-  function getPrevPage(item, count, func) {
+  function getPrevPage(item:number, count:number, func: Function) {
     if (item > 1) {
       return func(count - 1);
     }
   }
 
-  function getNextPage(count, func) {
+  function getNextPage(count:number, func: Function) {
     return func(count + 1);
   }
 
   const pageAmount = () => {
-    return Math.ceil(props.totalItem / props.itemAmount);
+    return Math.ceil(totalItem / itemAmount);
   };
 
   return (
@@ -27,7 +35,7 @@ const Pagination = (props) => {
           role="button"
           className={!hasPrev() ? "hidden page" : "page"}
           onClick={() =>
-            getPrevPage(props.itemAmount, props.curentPage, props.PageRender)
+            getPrevPage(itemAmount, curentPage, PageRender)
           }
         >
           Prev{" "}
@@ -40,7 +48,7 @@ const Pagination = (props) => {
         <span
           className="page"
           role="button"
-          onClick={() => getNextPage(props.curentPage, props.PageRender)}
+          onClick={() => getNextPage(curentPage, PageRender)}
         >
           Next{" "}
         </span>

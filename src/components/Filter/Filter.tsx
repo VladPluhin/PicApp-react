@@ -1,10 +1,12 @@
 import React, { useState, useContext } from "react";
 import classes from "./filter.module.scss";
 import { CSSTransition } from "react-transition-group";
-import State from '../../state/state';
-import BtnPrimary from  '../../UI/BtnPrimary';
-import { AppContext } from "../../context/context";
-const Filter = (props ) => {
+import State from "../state/state";
+import BtnPrimary from  '../UI/BtnPrimary';
+import { AppContext } from "../../components/context/context";
+
+
+const Filter: React.FC = () => {
   const state = new State();
   const nodeRef = React.useRef(null)
   const [showed, setShowedFilter] = useState(false);
@@ -18,8 +20,8 @@ const Filter = (props ) => {
     orientation: 'portrait'
   })
  
-  const getFilterValue=( key, value) => {
-    const newfilterValue = filter;
+  const getFilterValue=( key: string, value:string) => {
+    const newfilterValue: any = filter;
     Object.keys(newfilterValue).map((item)=> {
         if(item === key ) {
           newfilterValue[item] = value;
@@ -30,13 +32,11 @@ const Filter = (props ) => {
   } 
   
   function getPosts() {
-    return state.getSortedPostData( filter, setSearchPosts)
+    return state.getSortedPostData( filter, setSearchPosts!)
    } 
  
   const getShowedFilter = () => {
-      // showed ?  document.body.classList.remove('active-filter'): 
-      // document.body.classList.add('active-filter')
-      return showed ? setShowedFilter(false) : setShowedFilter(true);
+      return showed ? setShowedFilter( false) : setShowedFilter(true);
   };
  
   
@@ -89,12 +89,11 @@ const Filter = (props ) => {
               <div className={classes.btnWrapper}>
                   <BtnPrimary
                    value={"Find Posts"}
-                    onHandleFunction = {                                                              
-                    getPosts}
+                    onHandleFunction =  {() => {getShowedFilter()
+                      getPosts()}}
                   type="sybmit"/>
                 <BtnPrimary
                   value={"Reset filter"}
-                  onClick = {()=> console.log(2123)}
                   type="sybmit"/>
               </div>
             </div>

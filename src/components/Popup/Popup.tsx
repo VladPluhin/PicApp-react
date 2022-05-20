@@ -1,10 +1,12 @@
 import React from "react";
 import classes from "./popup.module.scss";
 import  "./popup.module.scss";
-// import PropTypes from 'prop-types';
 
-const Popup = (props) => {
-  const user = props.user;
+interface PopupProps {
+  user:any;
+}
+
+const Popup = ({user}:PopupProps) => {
   return(
       <div className={classes.popup}>
         <div className={classes.infoWrapper}>
@@ -27,14 +29,5 @@ const Popup = (props) => {
       </div >
   )
 };
-// Card.propTypes={
-// 	photo:PropTypes.shape({
-// 		 urls: PropTypes.shape({
-// 			regular: PropTypes.string
-// 		 }),
-// 		user: PropTypes.shape({
-// 			name:PropTypes.string
-// 		}),
-// 	})
-// }
+
 export default Popup;

@@ -2,11 +2,11 @@ import React, { useContext} from "react";
 import classes from "./sectionSearch.module.scss";
 import CardRow from "../CardRow/CardRow";
 import Filter from "../Filter/Filter";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../components/context/context";
 
 const SectionSearch = () => {
   const { searchPosts } = useContext(AppContext);
-  if (searchPosts.length === 0) {
+  if (searchPosts!.length === 0) {
       return (
         <section className={classes.sectionSearch}>
           <div className="container">

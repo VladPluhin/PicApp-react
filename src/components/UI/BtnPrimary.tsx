@@ -1,7 +1,14 @@
 import React from "react";
 import classes from "./ui.module.scss";
 
-const BtnPrimary = ({value, href, onHandleFunction}) => {
+interface BtnPrimaryProps {
+  value?: string;
+  href?: string;
+  type?: string;
+  onHandleFunction?: () => void
+}
+
+const BtnPrimary:React.FC<BtnPrimaryProps> = ({value, href, onHandleFunction}) => {
   const btnValue= value ? value :  'Button Primary';
   const linkHref = href ? href : '';
   if(linkHref) {

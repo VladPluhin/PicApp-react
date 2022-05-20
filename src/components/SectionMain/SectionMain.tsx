@@ -1,28 +1,28 @@
-import React, { useEffect, useRef , useState} from "react";
+import React, { useEffect, createRef , useState} from "react";
 import classes from "./sectionMain.module.scss";
 import CardRow from "../CardRow/CardRow";
 import Spinner from "../Spiner/Spiner";
-import { useObserver } from "../../hooks/useObserver";
-import State from "../../state/state";
+import { useObserver } from "../hooks/useObserver";
+import State from "../state/state";
 
-const SectionMain = () => {
+const SectionMain:React.FC = () => {
 		const state = new State();
-		const lastElement = useRef();
+		const lastElement =  React.createRef<HTMLDivElement>();
     const [page, setPageRender] = useState(0);
-    const [data, setRespones] = useState();
+    const [data, setRespones] = useState(null);
     const [posts, setPosts] = useState([]);
-    
-    function getPosts(posts, data) {
-			let newArr = []
+    let observCallback= ()=> {
+      setPageRender(page + 1)
+    } 
+    function getPosts(posts:Array<any>, data:any) {
+			let newArr: any = []
 			if (data) {
-					newArr = [...posts, ...data.response.results];
+					newArr = [...posts, ...data!.response.results];
 					return setPosts(newArr);
 				}
 		}
     
-    useObserver(lastElement, data, () => {
-			setPageRender(page + 1);
-    });
+    useObserver(lastElement, data, observCallback);
 
     useEffect(() => {
 			state.getData( page, setRespones);
