@@ -37,7 +37,7 @@ const Card:React.FC<CardProp>= ({card, likesRow}) => {
     return  ()=> {hoverOn.current!.removeEventListener("mouseenter", gethoverOn)};
   }
 
-  const getLike = (card:any, arr:any) => {
+  function getLike  (card:any, arr:any) {
     let selectPhoto = card ;
     let newArr = arr;
     const even = (item:any) => item.id === selectPhoto.id;
@@ -51,7 +51,7 @@ const Card:React.FC<CardProp>= ({card, likesRow}) => {
     return newArr;
   };
 
-  const deletedPost = (card:any, arr:any) => {
+  function deletedPost  (card:any, arr:any)  {
     var filtered = arr.filter(function (el:any) {
       return el.id !== card.id;
     });

@@ -17,7 +17,7 @@ const SectionMain:React.FC = () => {
     function getPosts(posts:Array<any>, data:any) {
 			let newArr: any = []
 			if (data) {
-					newArr = [...posts, ...data!.response.results];
+					newArr = [...posts, ...data?.response.results];
 					return setPosts(newArr);
 				}
 		}

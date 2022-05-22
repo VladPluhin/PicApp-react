@@ -19,7 +19,7 @@ const Layout = () => {
           </li>
           <li>
             <Link to="/search"> 
-              <span className="icons-search"> &#9906;</span>
+              <span className= {classes.iconSearch}> &#9906;</span>
             </Link>
           </li>
           <li>
