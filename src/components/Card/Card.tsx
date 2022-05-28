@@ -12,7 +12,7 @@ interface Card{
     username: string
   }
   urls: {
-    regular: string
+    small_s3: string
   }
 }
 
@@ -31,13 +31,13 @@ const Card:React.FC<CardProp>= ({card, likesRow}) => {
     setHovered(false)
     return  ()=> {hoverOff.current!.removeEventListener("mouseleave", gethoverOff)}
   }
-  {console.log(card)}
+ 
   const gethoverOn=()=> {
     setHovered(true)
     return  ()=> {hoverOn.current!.removeEventListener("mouseenter", gethoverOn)};
   }
 
-  function getLike  (card:any, arr:any) {
+  function getLike  (card:any, arr:any)    {
     let selectPhoto = card ;
     let newArr = arr;
     const even = (item:any) => item.id === selectPhoto.id;
@@ -62,7 +62,7 @@ const Card:React.FC<CardProp>= ({card, likesRow}) => {
   return (
     <div className={classes.card}  ref={hoverOff} onMouseLeave={gethoverOff}>
       <div className={classes.cardImg}>
-        <img className="img" src={card.urls.regular} alt={card.description? card.description: 'image descriptiom'}/>
+        <img className="img" src={card.urls.small_s3} alt={card.description? card.description: 'image descriptiom'}/>
       </div>
       <div className={classes.cardBody}>
         { likesRow ?
